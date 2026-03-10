@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin 後台管理</title>
+  <title>Admin 後台</title>
   <style>
     :root{
       --bg:#f4f8fc;
@@ -20,6 +20,7 @@
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -29,23 +30,65 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
     }
-    a{text-decoration:none;color:inherit}
+
+    a{color:inherit;text-decoration:none}
     button,input,textarea,select{font-family:inherit}
-    .page{max-width:1480px;margin:0 auto;padding:18px}
+
+    .page{
+      max-width:1480px;
+      margin:0 auto;
+      padding:18px;
+    }
+
     .topbar{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-      background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:24px;
-      padding:16px 18px;box-shadow:var(--shadow);margin-bottom:18px
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
     }
+
     .brand{display:flex;flex-direction:column;gap:4px}
-    .brand-kicker{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--blue);text-transform:uppercase}
-    .brand-title{font-size:30px;font-weight:900}
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      appearance:none;border:1px solid #bfd4ee;background:#fff;color:var(--text);
-      border-radius:14px;padding:11px 16px;min-height:44px;font-size:14px;font-weight:800;
-      cursor:pointer;display:inline-flex;align-items:center;justify-content:center
+    .brand-kicker{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:2px;
+      color:var(--blue);
+      text-transform:uppercase;
     }
+    .brand-title{
+      font-size:30px;
+      font-weight:900;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid #bfd4ee;
+      background:#fff;
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 16px;
+      min-height:44px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+
     .btn:hover{transform:translateY(-1px)}
     .btn-primary{background:linear-gradient(180deg,#7bbcff,#4a90e2);color:#fff;border-color:#5ca2ef}
     .btn-red{background:#fff3f4;color:#bb4252;border-color:#f0ccd2}
@@ -57,7 +100,9 @@
       grid-template-columns:460px 1fr;
       gap:18px;
     }
+
     .stack{display:grid;gap:18px}
+
     .panel{
       background:rgba(255,255,255,.95);
       border:1px solid var(--line);
@@ -65,79 +110,191 @@
       box-shadow:var(--shadow);
       overflow:hidden;
     }
+
     .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
     .panel.gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff7eb)}
-    .panel.purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
     .panel.green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
+
     .panel-head{
-      padding:16px 18px;border-bottom:1px solid #e9f1f8;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap
+      padding:16px 18px;
+      border-bottom:1px solid #e9f1f8;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
+
     .panel-title{font-size:21px;font-weight:900}
     .panel-sub{font-size:12px;font-weight:800;color:var(--muted);margin-top:4px}
     .panel-body{padding:16px 18px}
+
     .form-grid{display:grid;gap:12px}
     .field{display:grid;gap:7px}
-    .field label{font-size:12px;font-weight:900;letter-spacing:1px;color:#5d82aa}
-    .field input,.field textarea,.field select{
-      width:100%;border:1px solid #d9e5f2;border-radius:14px;background:#fff;
-      padding:12px 13px;font-size:15px;outline:none;color:var(--text)
+    .field label{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:1px;
+      color:#5d82aa;
     }
+
+    .field input,.field textarea,.field select{
+      width:100%;
+      border:1px solid #d9e5f2;
+      border-radius:14px;
+      background:#fff;
+      padding:12px 13px;
+      font-size:15px;
+      outline:none;
+      color:var(--text);
+    }
+
     .field textarea{min-height:110px;resize:vertical}
     .field input[type="color"]{height:48px;padding:5px}
     .hint{font-size:12px;color:var(--muted);font-weight:700;line-height:1.6}
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
     .action-row{display:flex;gap:10px;flex-wrap:wrap}
+
     .status{
-      margin-top:12px;padding:12px 14px;border-radius:14px;font-size:13px;font-weight:800;line-height:1.7
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.7;
     }
+
     .status.ok{background:#eefaf5;border:1px solid #caecd9;color:#267c58}
     .status.warn{background:#fff8eb;border:1px solid #ecdab7;color:#9d6a12}
     .status.err{background:#fff3f4;border:1px solid #f0ccd2;color:#bb4252}
     .status.load{background:#f4f9ff;border:1px solid #dbe8f6;color:#507394}
 
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
     .search{flex:1 1 240px}
     .search input{
-      width:100%;padding:12px 14px;border:1px solid #d9e5f2;border-radius:14px;background:#fff
+      width:100%;
+      padding:12px 14px;
+      border:1px solid #d9e5f2;
+      border-radius:14px;
+      background:#fff;
     }
+
     .count{
-      min-height:38px;padding:0 12px;border-radius:999px;background:#eef6ff;color:#4a90e2;
-      font-size:12px;font-weight:900;display:inline-flex;align-items:center
+      min-height:38px;
+      padding:0 12px;
+      border-radius:999px;
+      background:#eef6ff;
+      color:#4a90e2;
+      font-size:12px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
     }
 
     .list{display:grid;gap:12px}
     .item{
-      border:1px solid #dfeaf5;border-radius:18px;background:linear-gradient(180deg,#fff,#f9fbff);
-      padding:14px;display:grid;gap:10px
+      border:1px solid #dfeaf5;
+      border-radius:18px;
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:14px;
+      display:grid;
+      gap:10px;
     }
-    .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
-    .item-main{display:flex;gap:10px;min-width:0;flex:1}
-    .dot{width:12px;height:12px;border-radius:999px;margin-top:7px;flex:0 0 auto}
-    .item-title{font-size:19px;font-weight:900;line-height:1.35;word-break:break-word}
-    .item-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+
+    .item-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .item-main{
+      display:flex;
+      gap:10px;
+      min-width:0;
+      flex:1;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      margin-top:7px;
+      flex:0 0 auto;
+    }
+
+    .item-title{
+      font-size:19px;
+      font-weight:900;
+      line-height:1.35;
+      word-break:break-word;
+    }
+
+    .item-tags{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+
     .tag{
-      min-height:28px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
-      font-size:12px;font-weight:900
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
     }
+
     .t-blue{background:#eef6ff;color:#4a90e2}
     .t-purple{background:#f3efff;color:#7b57d0}
     .t-orange{background:#fff7ea;color:#c98211}
     .t-green{background:#eefaf5;color:#26815d}
     .t-gold{background:#fff8eb;color:#9d6a12}
     .t-gray{background:#f2f5f8;color:#6a7e93}
-    .item-meta{font-size:14px;font-weight:700;color:#5e7388;line-height:1.8;white-space:pre-wrap;word-break:break-word}
-    .item-actions{display:flex;gap:8px;flex-wrap:wrap}
-    .empty{
-      border:1px solid #dfeaf5;border-radius:16px;background:#fbfdff;color:#6c8095;
-      padding:14px;font-size:14px;font-weight:800
+    .t-red{background:#ffe9ec;color:#bc4152}
+
+    .item-meta{
+      font-size:14px;
+      font-weight:700;
+      color:#5e7388;
+      line-height:1.8;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
+
+    .item-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .empty{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:#fbfdff;
+      color:#6c8095;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+    }
+
     iframe{display:none;width:0;height:0;border:0}
 
     @media (max-width:1200px){
       .layout{grid-template-columns:1fr}
     }
+
     @media (max-width:760px){
       .page{padding:12px}
       .row-2,.row-3{grid-template-columns:1fr}
@@ -150,11 +307,15 @@
     <div class="topbar">
       <div class="brand">
         <div class="brand-kicker">Engineering Admin</div>
-        <div class="brand-title">後台管理 Admin</div>
+        <div class="brand-title">後台 Admin</div>
       </div>
+
       <div class="top-actions">
         <a class="btn" href="./index.html">首頁 Home</a>
-        <a class="btn" href="./region.html">分布 Region</a>
+        <a class="btn" href="./events.html">活動 Event</a>
+        <a class="btn" href="./calendar.html">月曆 Calendar</a>
+        <a class="btn" href="./sites.html">案場 Site</a>
+        <a class="btn" href="./members.html">人員 Member</a>
         <button class="btn btn-gold" type="button" id="btnReloadAll">重新整理 Reload</button>
       </div>
     </div>
@@ -199,7 +360,7 @@
                   <select id="eventType">
                     <option value="活動">活動 Event</option>
                     <option value="會議">會議 Meeting</option>
-                    <option value="現勘">現勘 Site Survey</option>
+                    <option value="現勘">現勘 Survey</option>
                     <option value="案場">案場 Site</option>
                   </select>
                 </div>
@@ -232,13 +393,11 @@
                 <div class="hint">網址直接寫入內容，前台自動轉連結</div>
               </div>
 
-              <div class="row-2">
-                <div class="field">
-                  <label>全天 All Day</label>
-                  <div style="display:flex;align-items:center;gap:10px;padding:10px 2px 0">
-                    <input id="eventAllDay" type="checkbox" style="width:auto">
-                    <span class="hint">全天 All Day</span>
-                  </div>
+              <div class="field">
+                <label>全天 All Day</label>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 2px 0">
+                  <input id="eventAllDay" type="checkbox" style="width:auto">
+                  <span class="hint">All Day</span>
                 </div>
               </div>
 
@@ -256,7 +415,7 @@
         <div class="panel gold">
           <div class="panel-head">
             <div>
-              <div class="panel-title">布告欄 Notice</div>
+              <div class="panel-title">公告 Notice</div>
               <div class="panel-sub">照片 Photo / 置頂 Pinned</div>
             </div>
           </div>
@@ -308,7 +467,7 @@
           <div class="panel-head">
             <div>
               <div class="panel-title">人員 Member</div>
-              <div class="panel-sub">專案組 / 機動組 / 維運組 / 後勤組 / 設計規劃組</div>
+              <div class="panel-sub">Project / Rapid Response / O&M / Support / Design</div>
             </div>
           </div>
           <div class="panel-body">
@@ -437,7 +596,7 @@
       ));
     }
 
-    function t(v, d=''){
+    function t(v,d=''){
       const s = String(v == null ? '' : v).trim();
       return s || d;
     }
@@ -488,6 +647,15 @@
       return isNaN(d.getTime()) ? null : d;
     }
 
+    function fmt(v, allDay){
+      const d = parseDate(v);
+      if(!d) return t(v,'—');
+      if(allDay){
+        return d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+      }
+      return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+    }
+
     function dtLocal(v){
       const d = parseDate(v);
       if(!d) return '';
@@ -499,20 +667,59 @@
       return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
     }
 
-    function fmt(v, allDay){
-      const d = parseDate(v);
-      if(!d) return t(v, '—');
-      if(allDay){
-        return d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
-      }
-      return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
-    }
-
     function typeColor(type){
       if(type === '會議') return '#8e6dd8';
       if(type === '現勘') return '#f5a623';
       if(type === '案場') return '#2ea97d';
       return '#4a90e2';
+    }
+
+    function normalizeEvents(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(e=>{
+        const p = e && e.extendedProps ? e.extendedProps : {};
+        return {
+          id:t(e.id),
+          title:t(e.title),
+          start:t(e.start),
+          end:t(e.end),
+          allDay:!!e.allDay,
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
+          extendedProps:{
+            location:t(p.location),
+            description:t(p.description),
+            updateAt:t(p.updateAt),
+            region:t(p.region,'未分類'),
+            eventType:t(p.eventType,'活動')
+          }
+        };
+      });
+    }
+
+    function normalizeAnnouncements(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(a=>({
+        id:t(a.id),
+        title:t(a.title),
+        message:t(a.message),
+        photoUrl:t(a.photoUrl),
+        isPinned:!!a.isPinned,
+        priority:Number(a.priority || 0),
+        updateAt:t(a.updateAt)
+      }));
+    }
+
+    function normalizeMembers(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(m=>({
+        id:t(m.id),
+        name:t(m.name),
+        groupName:t(m.groupName,'專案組'),
+        role:t(m.role),
+        photoUrl:t(m.photoUrl),
+        sortOrder:Number(m.sortOrder || 9999),
+        updateAt:t(m.updateAt)
+      }));
     }
 
     function setStatus(id, kind, text){
@@ -582,24 +789,25 @@
       if(!t($('eventStart').value)) return setStatus('eventStatus','warn','Start Required');
 
       const data = {
-        action: 'upsert_event',
-        password: t($('password').value),
-        id: t($('eventId').value),
-        title: t($('eventTitle').value),
-        start: t($('eventStart').value),
-        end: t($('eventEnd').value),
-        allDay: $('eventAllDay').checked ? 'true' : 'false',
-        location: t($('eventLocation').value),
-        description: t($('eventDescription').value),
-        color: t($('eventColor').value),
-        region: t($('eventRegion').value),
-        eventType: t($('eventType').value)
+        action:'upsert_event',
+        password:t($('password').value),
+        id:t($('eventId').value),
+        title:t($('eventTitle').value),
+        start:t($('eventStart').value),
+        end:t($('eventEnd').value),
+        allDay:$('eventAllDay').checked ? 'true' : 'false',
+        location:t($('eventLocation').value),
+        description:t($('eventDescription').value),
+        color:t($('eventColor').value),
+        region:t($('eventRegion').value),
+        eventType:t($('eventType').value)
       };
 
       const isUpdate = !!data.id;
       const form = createForm(data);
       setStatus('eventStatus','load','Saving...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -615,6 +823,7 @@
     function deleteEvent(){
       const err = commonCheck();
       if(err) return setStatus('eventStatus','warn',err);
+
       const id = t($('eventId').value);
       if(!id) return setStatus('eventStatus','warn','Select Event');
       if(!confirm('Delete Event?')) return;
@@ -624,8 +833,10 @@
         password:t($('password').value),
         id:id
       });
+
       setStatus('eventStatus','load','Deleting...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -680,6 +891,7 @@
       const form = createForm(data);
       setStatus('noticeStatus','load','Saving...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -695,6 +907,7 @@
     function deleteNotice(){
       const err = commonCheck();
       if(err) return setStatus('noticeStatus','warn',err);
+
       const id = t($('noticeId').value);
       if(!id) return setStatus('noticeStatus','warn','Select Notice');
       if(!confirm('Delete Notice?')) return;
@@ -704,8 +917,10 @@
         password:t($('password').value),
         id:id
       });
+
       setStatus('noticeStatus','load','Deleting...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -759,6 +974,7 @@
       const form = createForm(data);
       setStatus('memberStatus','load','Saving...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -774,6 +990,7 @@
     function deleteMember(){
       const err = commonCheck();
       if(err) return setStatus('memberStatus','warn',err);
+
       const id = t($('memberId').value);
       if(!id) return setStatus('memberStatus','warn','Select Member');
       if(!confirm('Delete Member?')) return;
@@ -783,8 +1000,10 @@
         password:t($('password').value),
         id:id
       });
+
       setStatus('memberStatus','load','Deleting...');
       form.submit();
+
       setTimeout(()=>{ if(form.parentNode) form.parentNode.removeChild(form); },1200);
       setTimeout(async ()=>{
         try{
@@ -799,17 +1018,20 @@
 
     function renderEventList(data){
       const keyword = t($('eventSearch').value).toLowerCase();
-      const items = data.filter(e=>{
+      const rows = data.filter(e=>{
         if(!keyword) return true;
         const text = [
-          t(e.title), t(e.extendedProps?.location), t(e.extendedProps?.region),
-          t(e.extendedProps?.description), t(e.extendedProps?.eventType)
+          t(e.title),
+          t(e.extendedProps?.location),
+          t(e.extendedProps?.region),
+          t(e.extendedProps?.description),
+          t(e.extendedProps?.eventType)
         ].join(' ').toLowerCase();
         return text.includes(keyword);
       });
 
-      $('eventCount').textContent = String(items.length);
-      $('eventList').innerHTML = items.length ? items.map(e=>{
+      $('eventCount').textContent = String(rows.length);
+      $('eventList').innerHTML = rows.length ? rows.map(e=>{
         const type = t(e.extendedProps?.eventType,'活動');
         const color = t(e.color, typeColor(type));
         const region = t(e.extendedProps?.region,'未分類');
@@ -825,7 +1047,7 @@
                   <div class="item-tags">
                     <span class="tag t-gray">${safe(region)}</span>
                     <span class="tag ${typeClass}">${safe(type)}</span>
-                    <span class="tag t-gray">${e.allDay ? 'All Day' : 'Timed'}</span>
+                    <span class="tag t-gold">${e.allDay ? 'All Day' : 'Timed'}</span>
                   </div>
                 </div>
               </div>
@@ -850,14 +1072,14 @@ ${safe(t(e.extendedProps?.description))}</div>
 
     function renderNoticeList(data){
       const keyword = t($('noticeSearch').value).toLowerCase();
-      const items = data.filter(n=>{
+      const rows = data.filter(n=>{
         if(!keyword) return true;
         const text = [t(n.title), t(n.message), t(n.photoUrl)].join(' ').toLowerCase();
         return text.includes(keyword);
       });
 
-      $('noticeCount').textContent = String(items.length);
-      $('noticeList').innerHTML = items.length ? items.map(n=>`
+      $('noticeCount').textContent = String(rows.length);
+      $('noticeList').innerHTML = rows.length ? rows.map(n=>`
         <div class="item">
           <div class="item-top">
             <div class="item-main">
@@ -865,8 +1087,8 @@ ${safe(t(e.extendedProps?.description))}</div>
               <div>
                 <div class="item-title">${safe(t(n.title))}</div>
                 <div class="item-tags">
-                  <span class="tag ${n.isPinned ? 't-orange' : 't-gray'}">${n.isPinned ? 'Pinned' : 'Normal'}</span>
-                  <span class="tag t-gold">P ${safe(String(n.priority))}</span>
+                  ${n.isPinned ? '<span class="tag t-gold">Pinned</span>' : '<span class="tag t-gray">Normal</span>'}
+                  <span class="tag t-red">P ${safe(String(n.priority))}</span>
                   <span class="tag ${t(n.photoUrl) ? 't-blue' : 't-gray'}">${t(n.photoUrl) ? 'Photo' : 'No Photo'}</span>
                 </div>
               </div>
@@ -891,14 +1113,14 @@ ${safe(t(n.updateAt))}</div>
 
     function renderMemberList(data){
       const keyword = t($('memberSearch').value).toLowerCase();
-      const items = data.filter(m=>{
+      const rows = data.filter(m=>{
         if(!keyword) return true;
         const text = [t(m.name), t(m.groupName), t(m.role)].join(' ').toLowerCase();
         return text.includes(keyword);
       });
 
-      $('memberCount').textContent = String(items.length);
-      $('memberList').innerHTML = items.length ? items.map(m=>`
+      $('memberCount').textContent = String(rows.length);
+      $('memberList').innerHTML = rows.length ? rows.map(m=>`
         <div class="item">
           <div class="item-top">
             <div class="item-main">
@@ -907,7 +1129,7 @@ ${safe(t(n.updateAt))}</div>
                 <div class="item-title">${safe(t(m.name))}</div>
                 <div class="item-tags">
                   <span class="tag t-green">${safe(t(m.groupName))}</span>
-                  <span class="tag t-gray">${safe(GROUP_LABEL[t(m.groupName)] || '')}</span>
+                  <span class="tag t-blue">${safe(GROUP_LABEL[t(m.groupName)] || '')}</span>
                 </div>
               </div>
             </div>
@@ -933,7 +1155,7 @@ Sort ${safe(String(m.sortOrder))}</div>
       setStatus('eventStatus','load','Loading...');
       const data = await jsonp(API_URL + '?action=list_events');
       if(!data || !data.ok) throw new Error('Event API');
-      allEvents = Array.isArray(data.events) ? data.events : [];
+      allEvents = normalizeEvents(data.events || []);
       renderEventList(allEvents);
       setStatus('eventStatus','ok','Loaded');
     }
@@ -942,7 +1164,7 @@ Sort ${safe(String(m.sortOrder))}</div>
       setStatus('noticeStatus','load','Loading...');
       const data = await jsonp(API_URL + '?action=list_announcements');
       if(!data || !data.ok) throw new Error('Notice API');
-      allAnnouncements = Array.isArray(data.announcements) ? data.announcements : [];
+      allAnnouncements = normalizeAnnouncements(data.announcements || []);
       renderNoticeList(allAnnouncements);
       setStatus('noticeStatus','ok','Loaded');
     }
@@ -951,7 +1173,7 @@ Sort ${safe(String(m.sortOrder))}</div>
       setStatus('memberStatus','load','Loading...');
       const data = await jsonp(API_URL + '?action=list_members');
       if(!data || !data.ok) throw new Error('Member API');
-      allMembers = Array.isArray(data.members) ? data.members : [];
+      allMembers = normalizeMembers(data.members || []);
       renderMemberList(allMembers);
       setStatus('memberStatus','ok','Loaded');
     }
