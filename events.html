@@ -11,17 +11,31 @@
       --line:#d8e5f2;
       --text:#1f3042;
       --muted:#63788f;
+
       --blue:#4a90e2;
+      --blue-soft:#eef6ff;
+
       --purple:#8e6dd8;
+      --purple-soft:#f3efff;
+
       --orange:#f5a623;
+      --orange-soft:#fff7ea;
+
       --green:#2ea97d;
+      --green-soft:#eefaf5;
+
       --gold:#d9a441;
+      --gold-soft:#fff8eb;
+
+      --red:#d95c68;
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
       --navh:78px;
+      --maxw:1180px;
     }
 
     *{box-sizing:border-box}
+
     html,body{
       margin:0;
       padding:0;
@@ -34,8 +48,9 @@
     }
 
     a{color:inherit;text-decoration:none}
+
     .page{
-      max-width:900px;
+      max-width:var(--maxw);
       margin:0 auto;
       padding:16px 16px calc(var(--navh) + 18px);
     }
@@ -44,16 +59,22 @@
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:10px;
-      background:rgba(255,255,255,.92);
+      gap:12px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.94);
       border:1px solid var(--line);
-      border-radius:22px;
+      border-radius:24px;
       padding:14px 16px;
       box-shadow:var(--shadow);
       margin-bottom:16px;
     }
 
-    .brand{display:flex;flex-direction:column;gap:4px}
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
     .brand-kicker{
       font-size:11px;
       font-weight:800;
@@ -61,23 +82,52 @@
       color:var(--blue);
       text-transform:uppercase;
     }
+
     .brand-title{
-      font-size:24px;
+      font-size:26px;
       font-weight:900;
-      line-height:1.2;
+      line-height:1.15;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid #bfd4ee;
+      background:#fff;
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 16px;
+      min-height:44px;
+      font-size:14px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(74,144,226,.05);
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn-blue{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
     }
 
     .panel{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.96);
       border:1px solid var(--line);
       border-radius:var(--r);
       box-shadow:var(--shadow);
       overflow:hidden;
       margin-bottom:16px;
     }
-
-    .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
-    .panel.purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
 
     .panel-head{
       padding:15px 16px;
@@ -89,9 +139,24 @@
       flex-wrap:wrap;
     }
 
-    .panel-title{font-size:20px;font-weight:900}
-    .panel-sub{font-size:12px;font-weight:800;color:var(--muted);margin-top:4px}
-    .panel-body{padding:16px}
+    .panel-title{
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .panel-sub{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .panel-body{
+      padding:16px;
+    }
+
+    .theme-blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
+    .theme-purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
 
     .toolbar{
       display:grid;
@@ -109,14 +174,14 @@
       color:var(--text);
     }
 
-    .tab-row{
+    .type-tabs{
       display:flex;
       gap:8px;
       flex-wrap:wrap;
     }
 
     .tab{
-      min-height:34px;
+      min-height:36px;
       padding:0 12px;
       border-radius:999px;
       border:1px solid #d8e5f2;
@@ -136,27 +201,27 @@
       border-color:#5ca2ef;
     }
 
-    .count-grid{
+    .stats-grid{
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:10px;
     }
 
-    .count-box{
+    .stat-card{
       border:1px solid #dfeaf5;
       border-radius:16px;
       background:linear-gradient(180deg,#fff,#f9fbff);
       padding:12px;
     }
 
-    .count-k{
+    .stat-k{
       font-size:12px;
       font-weight:800;
       color:var(--muted);
       margin-bottom:6px;
     }
 
-    .count-v{
+    .stat-v{
       font-size:24px;
       font-weight:900;
       line-height:1;
@@ -174,7 +239,10 @@
       padding:14px;
       display:grid;
       gap:10px;
+      cursor:pointer;
     }
+
+    .event-card:hover{transform:translateY(-1px)}
 
     .event-top{
       display:flex;
@@ -256,8 +324,8 @@
       right:0;
       bottom:0;
       z-index:1000;
-      background:rgba(255,255,255,.96);
-      backdrop-filter:blur(8px);
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(10px);
       border-top:1px solid #dfe8f2;
       display:grid;
       grid-template-columns:repeat(5,1fr);
@@ -279,8 +347,20 @@
     .nav-item.active{color:var(--blue)}
     .nav-ico{font-size:18px;line-height:1}
 
+    @media (max-width:900px){
+      .stats-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
     @media (max-width:760px){
-      .count-grid{grid-template-columns:1fr 1fr}
+      .page{
+        padding:12px 12px calc(var(--navh) + 18px);
+      }
+
+      .brand-title{
+        font-size:23px;
+      }
     }
   </style>
 </head>
@@ -288,23 +368,28 @@
   <div class="page">
     <div class="topbar">
       <div class="brand">
-        <div class="brand-kicker">Event List</div>
+        <div class="brand-kicker">Event Overview</div>
         <div class="brand-title">活動 Event</div>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn" href="./index.html">Home</a>
+        <a class="btn btn-blue" href="./admin.html">Admin</a>
       </div>
     </div>
 
-    <section class="panel blue">
+    <section class="panel theme-blue">
       <div class="panel-head">
         <div>
-          <div class="panel-title">活動清單 List</div>
-          <div class="panel-sub">活動 / 會議 / 現勘 / 案場</div>
+          <div class="panel-title">活動篩選 Filter</div>
+          <div class="panel-sub">Event / Meeting / Survey / Site</div>
         </div>
       </div>
       <div class="panel-body">
         <div class="toolbar">
           <input id="searchInput" class="search" type="text" placeholder="搜尋 Search">
 
-          <div class="tab-row" id="typeTabs">
+          <div class="type-tabs" id="typeTabs">
             <div class="tab active" data-type="全部">全部 All</div>
             <div class="tab" data-type="活動">活動 Event</div>
             <div class="tab" data-type="會議">會議 Meeting</div>
@@ -312,51 +397,48 @@
             <div class="tab" data-type="案場">案場 Site</div>
           </div>
 
-          <div class="count-grid">
-            <div class="count-box">
-              <div class="count-k">全部 All</div>
-              <div class="count-v" id="countAll">0</div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-k">全部 All</div>
+              <div class="stat-v" id="countAll">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">活動 Event</div>
-              <div class="count-v" id="countEvent">0</div>
+            <div class="stat-card">
+              <div class="stat-k">活動 Event</div>
+              <div class="stat-v" id="countEvent">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">會議 Meeting</div>
-              <div class="count-v" id="countMeeting">0</div>
+            <div class="stat-card">
+              <div class="stat-k">會議 Meeting</div>
+              <div class="stat-v" id="countMeeting">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">現勘 Survey</div>
-              <div class="count-v" id="countSurvey">0</div>
+            <div class="stat-card">
+              <div class="stat-k">現勘 Survey</div>
+              <div class="stat-v" id="countSurvey">0</div>
             </div>
-          </div>
-
-          <div class="count-grid">
-            <div class="count-box">
-              <div class="count-k">案場 Site</div>
-              <div class="count-v" id="countSite">0</div>
+            <div class="stat-card">
+              <div class="stat-k">案場 Site</div>
+              <div class="stat-v" id="countSite">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">本月 Monthly</div>
-              <div class="count-v" id="countMonth">0</div>
+            <div class="stat-card">
+              <div class="stat-k">本月 Monthly</div>
+              <div class="stat-v" id="countMonth">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">近期 Upcoming</div>
-              <div class="count-v" id="countUpcoming">0</div>
+            <div class="stat-card">
+              <div class="stat-k">近期 Upcoming</div>
+              <div class="stat-v" id="countUpcoming">0</div>
             </div>
-            <div class="count-box">
-              <div class="count-k">顯示 Showing</div>
-              <div class="count-v" id="countShowing">0</div>
+            <div class="stat-card">
+              <div class="stat-k">顯示 Showing</div>
+              <div class="stat-v" id="countShowing">0</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="panel purple">
+    <section class="panel theme-purple">
       <div class="panel-head">
         <div>
-          <div class="panel-title">清單 Cards</div>
+          <div class="panel-title">活動清單 Cards</div>
           <div class="panel-sub">Tap to Calendar</div>
         </div>
       </div>
@@ -462,9 +544,21 @@
       const d = parseDate(v);
       if(!d) return t(v,'—');
       if(allDay){
-        return d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+        return d.toLocaleDateString('zh-TW',{
+          year:'numeric',
+          month:'2-digit',
+          day:'2-digit',
+          weekday:'short'
+        });
       }
-      return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+      return d.toLocaleString('zh-TW',{
+        year:'numeric',
+        month:'2-digit',
+        day:'2-digit',
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:false
+      });
     }
 
     function typeColor(type){
