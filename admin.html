@@ -11,14 +11,28 @@
       --line:#d8e5f2;
       --text:#1f3042;
       --muted:#63788f;
+
       --blue:#4a90e2;
-      --purple:#8e6dd8;
-      --orange:#f5a623;
+      --blue-soft:#eef6ff;
+
       --green:#2ea97d;
+      --green-soft:#eefaf5;
+
       --gold:#d9a441;
+      --gold-soft:#fff8eb;
+
       --red:#d95c68;
+      --red-soft:#fff3f4;
+
+      --purple:#8e6dd8;
+      --purple-soft:#f3efff;
+
+      --orange:#f5a623;
+      --orange-soft:#fff7ea;
+
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
+      --maxw:1480px;
     }
 
     *{box-sizing:border-box}
@@ -35,7 +49,7 @@
     button,input,textarea,select{font-family:inherit}
 
     .page{
-      max-width:1480px;
+      max-width:var(--maxw);
       margin:0 auto;
       padding:18px;
     }
@@ -46,7 +60,7 @@
       align-items:center;
       gap:12px;
       flex-wrap:wrap;
-      background:rgba(255,255,255,.92);
+      background:rgba(255,255,255,.94);
       border:1px solid var(--line);
       border-radius:24px;
       padding:16px 18px;
@@ -82,18 +96,35 @@
       padding:11px 16px;
       min-height:44px;
       font-size:14px;
-      font-weight:800;
-      cursor:pointer;
+      font-weight:900;
       display:inline-flex;
       align-items:center;
       justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(74,144,226,.05);
     }
 
     .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(180deg,#7bbcff,#4a90e2);color:#fff;border-color:#5ca2ef}
-    .btn-red{background:#fff3f4;color:#bb4252;border-color:#f0ccd2}
-    .btn-green{background:#eefaf5;color:#257a57;border-color:#caecd9}
-    .btn-gold{background:#fff8eb;color:#9d6a12;border-color:#ecdab7}
+    .btn-blue{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
+    .btn-red{
+      background:#fff3f4;
+      color:#bb4252;
+      border-color:#f0ccd2;
+    }
+    .btn-green{
+      background:#eefaf5;
+      color:#257a57;
+      border-color:#caecd9;
+    }
+    .btn-gold{
+      background:#fff8eb;
+      color:#9d6a12;
+      border-color:#ecdab7;
+    }
 
     .layout{
       display:grid;
@@ -104,16 +135,12 @@
     .stack{display:grid;gap:18px}
 
     .panel{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.96);
       border:1px solid var(--line);
       border-radius:var(--r);
       box-shadow:var(--shadow);
       overflow:hidden;
     }
-
-    .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
-    .panel.gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff7eb)}
-    .panel.green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
 
     .panel-head{
       padding:16px 18px;
@@ -129,8 +156,13 @@
     .panel-sub{font-size:12px;font-weight:800;color:var(--muted);margin-top:4px}
     .panel-body{padding:16px 18px}
 
+    .theme-blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
+    .theme-gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff8eb)}
+    .theme-green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
+
     .form-grid{display:grid;gap:12px}
     .field{display:grid;gap:7px}
+
     .field label{
       font-size:12px;
       font-weight:900;
@@ -138,7 +170,9 @@
       color:#5d82aa;
     }
 
-    .field input,.field textarea,.field select{
+    .field input,
+    .field textarea,
+    .field select{
       width:100%;
       border:1px solid #d9e5f2;
       border-radius:14px;
@@ -149,9 +183,23 @@
       color:var(--text);
     }
 
-    .field textarea{min-height:110px;resize:vertical}
-    .field input[type="color"]{height:48px;padding:5px}
-    .hint{font-size:12px;color:var(--muted);font-weight:700;line-height:1.6}
+    .field textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .field input[type="color"]{
+      height:48px;
+      padding:5px;
+    }
+
+    .hint{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.6;
+    }
+
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
     .action-row{display:flex;gap:10px;flex-wrap:wrap}
@@ -200,6 +248,7 @@
     }
 
     .list{display:grid;gap:12px}
+
     .item{
       border:1px solid #dfeaf5;
       border-radius:18px;
@@ -289,7 +338,12 @@
       font-weight:800;
     }
 
-    iframe{display:none;width:0;height:0;border:0}
+    iframe{
+      display:none;
+      width:0;
+      height:0;
+      border:0;
+    }
 
     @media (max-width:1200px){
       .layout{grid-template-columns:1fr}
@@ -311,18 +365,18 @@
       </div>
 
       <div class="top-actions">
-        <a class="btn" href="./index.html">首頁 Home</a>
-        <a class="btn" href="./events.html">活動 Event</a>
-        <a class="btn" href="./calendar.html">月曆 Calendar</a>
-        <a class="btn" href="./sites.html">案場 Site</a>
-        <a class="btn" href="./members.html">人員 Member</a>
-        <button class="btn btn-gold" type="button" id="btnReloadAll">重新整理 Reload</button>
+        <a class="btn" href="./index.html">Home</a>
+        <a class="btn" href="./events.html">Event</a>
+        <a class="btn" href="./calendar.html">Calendar</a>
+        <a class="btn" href="./sites.html">Site</a>
+        <a class="btn" href="./members.html">Member</a>
+        <button class="btn btn-gold" type="button" id="btnReloadAll">Reload</button>
       </div>
     </div>
 
     <div class="layout">
       <div class="stack">
-        <div class="panel blue">
+        <section class="panel theme-blue">
           <div class="panel-head">
             <div>
               <div class="panel-title">活動 Event</div>
@@ -364,6 +418,7 @@
                     <option value="案場">案場 Site</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="eventRegion">區域 Region</label>
                   <select id="eventRegion">
@@ -376,6 +431,7 @@
                     <option value="未分類">未分類 Other</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="eventColor">色彩 Color</label>
                   <input id="eventColor" type="color" value="#4a90e2">
@@ -402,17 +458,17 @@
               </div>
 
               <div class="action-row">
-                <button class="btn btn-primary" type="button" id="btnSaveEvent">儲存 Save</button>
-                <button class="btn btn-red" type="button" id="btnDeleteEvent">刪除 Delete</button>
-                <button class="btn" type="button" id="btnResetEvent">清空 Reset</button>
+                <button class="btn btn-blue" type="button" id="btnSaveEvent">Save</button>
+                <button class="btn btn-red" type="button" id="btnDeleteEvent">Delete</button>
+                <button class="btn" type="button" id="btnResetEvent">Reset</button>
               </div>
             </div>
 
             <div id="eventStatus" class="status ok">Ready</div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel gold">
+        <section class="panel theme-gold">
           <div class="panel-head">
             <div>
               <div class="panel-title">公告 Notice</div>
@@ -453,21 +509,21 @@
               </div>
 
               <div class="action-row">
-                <button class="btn btn-primary" type="button" id="btnSaveNotice">儲存 Save</button>
-                <button class="btn btn-red" type="button" id="btnDeleteNotice">刪除 Delete</button>
-                <button class="btn" type="button" id="btnResetNotice">清空 Reset</button>
+                <button class="btn btn-blue" type="button" id="btnSaveNotice">Save</button>
+                <button class="btn btn-red" type="button" id="btnDeleteNotice">Delete</button>
+                <button class="btn" type="button" id="btnResetNotice">Reset</button>
               </div>
             </div>
 
             <div id="noticeStatus" class="status ok">Ready</div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel green">
+        <section class="panel theme-green">
           <div class="panel-head">
             <div>
               <div class="panel-title">人員 Member</div>
-              <div class="panel-sub">Project / Rapid Response / O&M / Support / Design</div>
+              <div class="panel-sub">Project / Rapid / O&M / Support / Design</div>
             </div>
           </div>
           <div class="panel-body">
@@ -490,6 +546,7 @@
                     <option value="設計規劃組">設計規劃組 Design</option>
                   </select>
                 </div>
+
                 <div class="field">
                   <label for="memberRole">職稱 Role</label>
                   <input id="memberRole" type="text">
@@ -501,6 +558,7 @@
                   <label for="memberPhotoUrl">照片 Photo URL</label>
                   <input id="memberPhotoUrl" type="text">
                 </div>
+
                 <div class="field">
                   <label for="memberSortOrder">排序 Sort</label>
                   <input id="memberSortOrder" type="number" value="100" min="0" step="1">
@@ -508,19 +566,19 @@
               </div>
 
               <div class="action-row">
-                <button class="btn btn-primary" type="button" id="btnSaveMember">儲存 Save</button>
-                <button class="btn btn-red" type="button" id="btnDeleteMember">刪除 Delete</button>
-                <button class="btn" type="button" id="btnResetMember">清空 Reset</button>
+                <button class="btn btn-blue" type="button" id="btnSaveMember">Save</button>
+                <button class="btn btn-red" type="button" id="btnDeleteMember">Delete</button>
+                <button class="btn" type="button" id="btnResetMember">Reset</button>
               </div>
             </div>
 
             <div id="memberStatus" class="status ok">Ready</div>
           </div>
-        </div>
+        </section>
       </div>
 
       <div class="stack">
-        <div class="panel blue">
+        <section class="panel theme-blue">
           <div class="panel-head">
             <div>
               <div class="panel-title">活動清單 Event List</div>
@@ -532,11 +590,13 @@
               <div class="search"><input id="eventSearch" type="text" placeholder="搜尋 Search"></div>
               <div class="count" id="eventCount">0</div>
             </div>
-            <div class="list" id="eventList"><div class="empty">No Data</div></div>
+            <div class="list" id="eventList">
+              <div class="empty">No Data</div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel gold">
+        <section class="panel theme-gold">
           <div class="panel-head">
             <div>
               <div class="panel-title">公告清單 Notice List</div>
@@ -548,11 +608,13 @@
               <div class="search"><input id="noticeSearch" type="text" placeholder="搜尋 Search"></div>
               <div class="count" id="noticeCount">0</div>
             </div>
-            <div class="list" id="noticeList"><div class="empty">No Data</div></div>
+            <div class="list" id="noticeList">
+              <div class="empty">No Data</div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="panel green">
+        <section class="panel theme-green">
           <div class="panel-head">
             <div>
               <div class="panel-title">人員清單 Member List</div>
@@ -564,9 +626,11 @@
               <div class="search"><input id="memberSearch" type="text" placeholder="搜尋 Search"></div>
               <div class="count" id="memberCount">0</div>
             </div>
-            <div class="list" id="memberList"><div class="empty">No Data</div></div>
+            <div class="list" id="memberList">
+              <div class="empty">No Data</div>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
@@ -651,9 +715,21 @@
       const d = parseDate(v);
       if(!d) return t(v,'—');
       if(allDay){
-        return d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+        return d.toLocaleDateString('zh-TW',{
+          year:'numeric',
+          month:'2-digit',
+          day:'2-digit',
+          weekday:'short'
+        });
       }
-      return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+      return d.toLocaleString('zh-TW',{
+        year:'numeric',
+        month:'2-digit',
+        day:'2-digit',
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:false
+      });
     }
 
     function dtLocal(v){
@@ -1056,7 +1132,7 @@
 ${safe(t(e.extendedProps?.location))}
 ${safe(t(e.extendedProps?.description))}</div>
             <div class="item-actions">
-              <button class="btn btn-primary" type="button" data-event="${safe(t(e.id))}">Edit</button>
+              <button class="btn btn-blue" type="button" data-event="${safe(t(e.id))}">Edit</button>
             </div>
           </div>
         `;
@@ -1098,7 +1174,7 @@ ${safe(t(e.extendedProps?.description))}</div>
 ${safe(t(n.photoUrl))}
 ${safe(t(n.updateAt))}</div>
           <div class="item-actions">
-            <button class="btn btn-primary" type="button" data-notice="${safe(t(n.id))}">Edit</button>
+            <button class="btn btn-blue" type="button" data-notice="${safe(t(n.id))}">Edit</button>
           </div>
         </div>
       `).join('') : '<div class="empty">No Data</div>';
@@ -1138,7 +1214,7 @@ ${safe(t(n.updateAt))}</div>
 ${safe(t(m.photoUrl))}
 Sort ${safe(String(m.sortOrder))}</div>
           <div class="item-actions">
-            <button class="btn btn-primary" type="button" data-member="${safe(t(m.id))}">Edit</button>
+            <button class="btn btn-blue" type="button" data-member="${safe(t(m.id))}">Edit</button>
           </div>
         </div>
       `).join('') : '<div class="empty">No Data</div>';
@@ -1220,7 +1296,10 @@ Sort ${safe(String(m.sortOrder))}</div>
 
     async function boot(){
       try{
-        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL') throw new Error('API_URL Error');
+        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
+          throw new Error('API_URL Error');
+        }
+
         bind();
         resetEventForm();
         resetNoticeForm();
