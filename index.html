@@ -3,12 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Engineering Portal 工程入口</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales-all.global.min.js"></script>
-
+  <title>Home 公告</title>
   <style>
     :root{
       --bg:#f4f8fc;
@@ -24,6 +19,7 @@
       --red:#d95c68;
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
+      --navh:78px;
     }
 
     *{box-sizing:border-box}
@@ -40,34 +36,44 @@
     }
 
     a{color:inherit;text-decoration:none}
-    button{font-family:inherit}
 
-    .page{max-width:1480px;margin:0 auto;padding:18px}
+    .page{
+      max-width:900px;
+      margin:0 auto;
+      padding:16px 16px calc(var(--navh) + 18px);
+    }
 
     .topbar{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
-      background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:24px;
-      padding:16px 18px;box-shadow:var(--shadow);margin-bottom:18px
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
     }
 
     .brand{display:flex;flex-direction:column;gap:4px}
-    .brand-kicker{font-size:12px;font-weight:800;letter-spacing:2px;color:var(--blue);text-transform:uppercase}
-    .brand-title{font-size:30px;font-weight:900}
-
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      appearance:none;border:1px solid #bfd4ee;background:#fff;color:var(--text);border-radius:14px;
-      padding:11px 16px;min-height:44px;font-size:14px;font-weight:800;cursor:pointer;
-      display:inline-flex;align-items:center;justify-content:center
+    .brand-kicker{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2px;
+      color:var(--gold);
+      text-transform:uppercase;
     }
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(180deg,#7bbcff,#4a90e2);color:#fff;border-color:#5ca2ef}
+    .brand-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.2;
+    }
 
     .hero{
       display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:18px;
-      margin-bottom:18px;
+      gap:16px;
+      margin-bottom:16px;
     }
 
     .panel{
@@ -78,369 +84,299 @@
       overflow:hidden;
     }
 
-    .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
-    .panel.purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
-    .panel.orange .panel-head{background:linear-gradient(180deg,#fffaf2,#fff3e4)}
-    .panel.green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
     .panel.gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff7eb)}
+    .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
+    .panel.green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
 
     .panel-head{
-      padding:16px 18px;border-bottom:1px solid #e9f1f8;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap
+      padding:15px 16px;
+      border-bottom:1px solid #e9f1f8;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
-    .panel-title{font-size:21px;font-weight:900}
-    .panel-sub{font-size:12px;font-weight:800;color:var(--muted);margin-top:4px}
-    .panel-body{padding:16px 18px}
-
-    .hero-left{
-      display:grid;
-      gap:14px;
-      align-content:start;
-      min-height:320px;
+    .panel-title{
+      font-size:20px;
+      font-weight:900;
     }
 
-    .hero-chip{
-      display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;
-      background:#eef6ff;color:var(--blue);font-size:12px;font-weight:900
+    .panel-sub{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .panel-body{
+      padding:16px;
     }
 
     .hero-title{
-      font-size:36px;
+      font-size:28px;
       font-weight:900;
       line-height:1.18;
-      margin:2px 0 0;
+      margin:0 0 8px;
     }
 
     .hero-desc{
-      color:var(--muted);
-      font-size:15px;
+      font-size:14px;
       font-weight:700;
-      line-height:1.85;
+      color:var(--muted);
+      line-height:1.8;
     }
 
     .hero-stats{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:1fr 1fr;
       gap:12px;
+      margin-top:14px;
     }
 
-    .stat-card{
+    .stat{
       border:1px solid #dfeaf5;
       border-radius:18px;
-      padding:14px;
       background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:14px;
     }
 
-    .stat-label{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:6px}
-    .stat-value{font-size:28px;font-weight:900;line-height:1}
+    .stat-k{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
 
-    .hero-media{
-      min-height:320px;
+    .stat-v{
+      font-size:26px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .notice-list{
       display:grid;
-      grid-template-rows:1fr auto;
       gap:12px;
     }
 
-    .hero-photo{
-      overflow:hidden;border-radius:22px;border:1px solid #dfeaf5;background:#eef5fc;min-height:250px
-    }
-
-    .hero-photo img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .photo-fallback{
-      width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-      color:#7b91a8;font-size:17px;font-weight:900;text-align:center;padding:20px
-    }
-
-    .audio-card{
-      border:1px solid #dfeaf5;border-radius:18px;padding:12px 14px;background:#fbfdff;
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
-    }
-
-    .audio-title{font-size:14px;font-weight:900}
-    .audio-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px}
-    .audio-card audio{width:260px;max-width:100%}
-
-    .dashboard{
-      display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:18px;
-      margin-bottom:18px;
-    }
-
-    .left-stack,.right-stack{display:grid;gap:18px}
-
-    .notice-wrap{display:grid;gap:12px}
     .notice-card{
-      border:1px solid #ead8af;border-radius:18px;background:#fffef9;padding:14px;display:grid;gap:10px
+      border:1px solid #ead8af;
+      border-radius:18px;
+      background:#fffef9;
+      padding:14px;
+      display:grid;
+      gap:10px;
     }
-    .notice-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
-    .notice-title{font-size:19px;font-weight:900;color:#7d5900;line-height:1.35}
-    .badge-row{display:flex;gap:8px;flex-wrap:wrap}
+
+    .notice-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .notice-title{
+      font-size:18px;
+      font-weight:900;
+      color:#7d5900;
+      line-height:1.35;
+    }
+
+    .badge-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
     .badge{
-      min-height:28px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
-      font-size:12px;font-weight:900
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
     }
+
     .b-gold{background:#fff3cf;color:#9b6900}
     .b-red{background:#ffe9ec;color:#bc4152}
     .b-blue{background:#eef6ff;color:#4a90e2}
+
     .notice-msg{
-      font-size:14px;font-weight:700;line-height:1.9;color:#6d5830;white-space:pre-wrap;word-break:break-word
-    }
-    .notice-photo{
-      border-radius:16px;overflow:hidden;border:1px solid #f1e3c0;background:#fff
-    }
-    .notice-photo img{
-      width:100%;display:block;max-height:280px;object-fit:cover
-    }
-    .notice-time{font-size:12px;font-weight:800;color:#9a7c41}
-
-    .member-summary{
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:14px;
-    }
-
-    .mini-stat-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .mini-stat{
-      border:1px solid #dfeaf5;border-radius:16px;padding:12px;background:#fbfdff
-    }
-    .mini-stat .k{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:4px}
-    .mini-stat .v{font-size:24px;font-weight:900}
-
-    .rank-list{display:grid;gap:10px}
-    .rank-row{
-      display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;
-      padding:12px;border:1px solid #e6eef7;border-radius:14px;background:#fff
-    }
-
-    .medal{
-      width:38px;height:38px;border-radius:999px;display:flex;align-items:center;justify-content:center;
-      font-size:16px;font-weight:900
-    }
-    .m1{background:#fff7dc;color:#b07b08}
-    .m2{background:#f1f5f9;color:#67798d}
-    .m3{background:#fff0e6;color:#b86a2c}
-    .m0{background:#eef6ff;color:#4a90e2}
-
-    .rank-name{font-size:15px;font-weight:900}
-    .rank-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px}
-    .rank-num{font-size:18px;font-weight:900}
-
-    .member-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-    }
-
-    .member-card{
-      border:1px solid #dfeaf5;border-radius:18px;background:linear-gradient(180deg,#fff,#f9fbff);
-      overflow:hidden
-    }
-
-    .member-photo{
-      aspect-ratio:1/1;
-      background:#eef5fc;
-      display:flex;align-items:center;justify-content:center
-    }
-
-    .member-photo img{
-      width:100%;height:100%;object-fit:cover;display:block
-    }
-
-    .member-fallback{
-      font-size:28px;font-weight:900;color:#87a0b8
-    }
-
-    .member-info{padding:12px}
-    .member-name{font-size:17px;font-weight:900;line-height:1.3}
-    .member-role{font-size:13px;font-weight:800;color:var(--muted);margin-top:4px}
-    .member-group{
-      margin-top:8px;display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;
-      font-size:12px;font-weight:900;background:#eefaf5;color:#2a7d5c
-    }
-
-    .calendar-wrap{
-      display:grid;
-      grid-template-columns:1fr .95fr;
-      gap:18px;
-    }
-
-    .status-box{
-      padding:0 18px 14px;
-      font-size:13px;
-      font-weight:800;
-      color:#58728f;
-      min-height:20px
-    }
-
-    #calendar{min-height:650px}
-    .fc-wrap{padding:8px 18px 18px}
-
-    .fc{
-      --fc-border-color:#e3edf8;
-      --fc-page-bg-color:transparent;
-      --fc-neutral-bg-color:#f8fbff;
-      --fc-list-event-hover-bg-color:#eef6ff;
-      --fc-today-bg-color:#edf6ff;
-      --fc-event-border-color:transparent;
-      --fc-button-bg-color:#ffffff;
-      --fc-button-border-color:#d6e5f5;
-      --fc-button-hover-bg-color:#f5faff;
-      --fc-button-hover-border-color:#bcd4ee;
-      --fc-button-active-bg-color:#edf6ff;
-      --fc-button-active-border-color:#9ec3eb;
-      --fc-event-bg-color:#4a90e2;
-      --fc-event-text-color:#ffffff;
-    }
-
-    .fc .fc-toolbar-title{font-size:26px;font-weight:900;color:#223446}
-    .fc .fc-button{color:#294764;font-weight:900;box-shadow:none;border-radius:12px;padding:8px 12px}
-    .fc .fc-col-header-cell-cushion{padding:12px 4px;font-size:13px;color:#6282a3;font-weight:900}
-    .fc .fc-daygrid-day-number{padding:10px;color:#27415c;font-size:15px;font-weight:900}
-    .fc .fc-daygrid-event{border-radius:10px;padding:3px 6px;margin-top:4px;box-shadow:0 6px 12px rgba(74,144,226,.14);cursor:pointer}
-    .fc .fc-event-title{white-space:normal;font-weight:900;line-height:1.35;font-size:12px}
-    .fc .fc-daygrid-more-link{font-weight:900;color:#4a90e2}
-    .fc-theme-standard td,.fc-theme-standard th{border-color:#e3edf8}
-
-    .detail-empty{
-      color:var(--muted);
-      font-size:14px;
-      font-weight:800;
-      line-height:1.8
-    }
-
-    .detail-title{
-      font-size:26px;
-      font-weight:900;
-      line-height:1.25;
-      margin-bottom:14px
-    }
-
-    .detail-grid{
-      display:grid;
-      gap:10px;
-      margin-bottom:14px
-    }
-
-    .detail-item{
-      border:1px solid #dfeaf5;
-      border-radius:16px;
-      background:#fbfdff;
-      padding:12px 14px
-    }
-
-    .detail-label{
-      font-size:12px;
-      font-weight:900;
-      color:#6488b0;
-      letter-spacing:1px;
-      margin-bottom:6px
-    }
-
-    .detail-value{
       font-size:14px;
       font-weight:700;
       line-height:1.9;
-      color:#24374a;
+      color:#6d5830;
       white-space:pre-wrap;
-      word-break:break-word
+      word-break:break-word;
     }
 
-    .upcoming-list{
+    .notice-photo{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid #f1e3c0;
+      background:#fff;
+    }
+
+    .notice-photo img{
+      width:100%;
+      display:block;
+      max-height:240px;
+      object-fit:cover;
+    }
+
+    .notice-time{
+      font-size:12px;
+      font-weight:800;
+      color:#9a7c41;
+    }
+
+    .month-preview{
       display:grid;
-      gap:10px
+      gap:10px;
     }
 
-    .upcoming-card{
+    .event-card{
       border:1px solid #dfeaf5;
       border-radius:16px;
       background:linear-gradient(180deg,#fff,#f9fbff);
       padding:12px;
-      cursor:pointer
+      cursor:pointer;
     }
 
-    .upcoming-top{display:flex;gap:10px;align-items:flex-start}
+    .event-top{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
     .dot{
-      width:12px;height:12px;border-radius:999px;margin-top:7px;flex:0 0 auto
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      margin-top:7px;
+      flex:0 0 auto;
     }
-    .upcoming-title{font-size:16px;font-weight:900;line-height:1.35}
-    .tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+    .event-title{
+      font-size:16px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .event-meta{
+      margin-top:8px;
+      font-size:13px;
+      font-weight:800;
+      color:#5e7388;
+      line-height:1.8;
+    }
+
+    .tag-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
     .tag{
-      min-height:28px;padding:0 10px;border-radius:999px;display:inline-flex;align-items:center;
-      font-size:12px;font-weight:900
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
     }
+
     .t-blue{background:#eef6ff;color:#4a90e2}
     .t-purple{background:#f3efff;color:#7b57d0}
     .t-orange{background:#fff7ea;color:#c98211}
     .t-green{background:#eefaf5;color:#26815d}
-    .t-gold{background:#fff8eb;color:#9d6a12}
     .t-gray{background:#f2f5f8;color:#6a7e93}
-    .upcoming-meta{font-size:13px;color:#5e7388;font-weight:800;line-height:1.8;margin-top:8px}
 
-    .site-summary-grid{
+    .quick-link{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:12px
+      gap:12px;
     }
 
-    .site-box{
-      border:1px solid #dfeaf5;border-radius:18px;background:linear-gradient(180deg,#fff,#f9fbff);
-      padding:14px
+    .quick-btn{
+      border:1px solid #dfeaf5;
+      border-radius:18px;
+      background:#fff;
+      padding:14px;
+      display:grid;
+      gap:6px;
     }
-    .site-box .k{font-size:12px;color:var(--muted);font-weight:800;margin-bottom:6px}
-    .site-box .v{font-size:26px;font-weight:900}
+
+    .quick-btn .k{
+      font-size:15px;
+      font-weight:900;
+    }
+
+    .quick-btn .s{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+    }
 
     .empty{
-      border:1px solid #dfeaf5;border-radius:16px;background:#fbfdff;color:#6c8095;
-      padding:14px;font-size:14px;font-weight:800
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:#fbfdff;
+      color:#6c8095;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
     }
 
     .err{
-      border:1px solid #f0ccd2;border-radius:16px;background:#fff3f4;color:#bb4252;
-      padding:14px;font-size:14px;font-weight:800;line-height:1.8
-    }
-
-    .footer-note{
-      text-align:center;
-      font-size:12px;
+      border:1px solid #f0ccd2;
+      border-radius:16px;
+      background:#fff3f4;
+      color:#bb4252;
+      padding:14px;
+      font-size:14px;
       font-weight:800;
-      color:#7890a8;
-      padding:4px 8px 18px
+      line-height:1.8;
     }
 
-    @media (max-width:1280px){
-      .member-grid{grid-template-columns:repeat(3,1fr)}
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:1000;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(8px);
+      border-top:1px solid #dfe8f2;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      box-shadow:0 -8px 20px rgba(58,100,160,.08);
+      height:var(--navh);
     }
 
-    @media (max-width:1180px){
-      .hero,.dashboard,.calendar-wrap,.member-summary{grid-template-columns:1fr}
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-size:11px;
+      font-weight:900;
+      color:#6b8198;
     }
 
-    @media (max-width:900px){
-      .hero-stats{grid-template-columns:1fr 1fr}
-      .member-grid{grid-template-columns:repeat(2,1fr)}
-      .site-summary-grid{grid-template-columns:1fr}
+    .nav-item.active{
+      color:var(--gold);
     }
 
-    @media (max-width:760px){
-      .page{padding:12px}
-      .brand-title{font-size:24px}
-      .hero-title{font-size:28px}
-      .hero-stats,.member-grid,.mini-stat-grid{grid-template-columns:1fr}
-      .fc .fc-toolbar{display:flex;flex-direction:column;gap:10px}
-      .fc .fc-toolbar-title{font-size:22px}
+    .nav-ico{
+      font-size:18px;
+      line-height:1;
     }
   </style>
 </head>
@@ -449,211 +385,126 @@
     <div class="topbar">
       <div class="brand">
         <div class="brand-kicker">Engineering Portal</div>
-        <div class="brand-title">工程入口 Home</div>
-      </div>
-
-      <div class="top-actions">
-        <a class="btn" href="./region.html">分布 Region</a>
-        <a class="btn btn-primary" href="./admin.html">後台 Admin</a>
+        <div class="brand-title">公告 Home</div>
       </div>
     </div>
 
     <section class="hero">
-      <div class="panel blue">
-        <div class="panel-body hero-left">
-          <div class="hero-chip">Dashboard 總覽</div>
-          <div class="hero-title">工程活動與人員一頁掌握</div>
-          <div class="hero-desc">Event / Notice / Member / Region / Site Ranking</div>
+      <div class="panel gold">
+        <div class="panel-body">
+          <div class="hero-title">重點公告與本月活動</div>
+          <div class="hero-desc">Notice / Monthly Preview</div>
 
           <div class="hero-stats">
-            <div class="stat-card">
-              <div class="stat-label">本月活動 Monthly Events</div>
-              <div class="stat-value" id="statMonthCount">0</div>
+            <div class="stat">
+              <div class="stat-k">公告 Notice</div>
+              <div class="stat-v" id="statNoticeCount">0</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">近期活動 Upcoming</div>
-              <div class="stat-value" id="statUpcomingCount">0</div>
+            <div class="stat">
+              <div class="stat-k">本月活動 Events</div>
+              <div class="stat-v" id="statMonthCount">0</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">案場數 Site</div>
-              <div class="stat-value" id="statSiteCount">0</div>
+            <div class="stat">
+              <div class="stat-k">案場 Site</div>
+              <div class="stat-v" id="statSiteCount">0</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-label">總人數 Members</div>
-              <div class="stat-value" id="statMemberCount">0</div>
+            <div class="stat">
+              <div class="stat-k">置頂 Pinned</div>
+              <div class="stat-v" id="statPinnedCount">0</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="panel purple">
-        <div class="panel-body hero-media">
-          <div class="hero-photo" id="heroPhotoWrap">
-            <img id="heroPhoto" src="./assets/hero.jpg" alt="Hero" onerror="window.heroFallback && window.heroFallback()">
+      <div class="panel gold">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">重點公告 Notice</div>
+            <div class="panel-sub">Pinned / Photo</div>
           </div>
-
-          <div class="audio-card">
-            <div>
-              <div class="audio-title">背景音樂 Audio</div>
-              <div class="audio-sub">MP3 / Loop / Mute</div>
-            </div>
-            <audio id="bgAudio" autoplay muted loop playsinline controls>
-              <source src="./assets/bg.mp3" type="audio/mpeg">
-            </audio>
+        </div>
+        <div class="panel-body">
+          <div class="notice-list" id="noticeList">
+            <div class="empty">Loading...</div>
           </div>
         </div>
       </div>
+
+      <div class="panel blue">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">本月活動 Monthly Preview</div>
+            <div class="panel-sub">Tap to Calendar</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="month-preview" id="monthPreview">
+            <div class="empty">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel green">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">快捷 Quick</div>
+            <div class="panel-sub">Mobile Navigation</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="quick-link">
+            <a class="quick-btn" href="./calendar.html">
+              <div class="k">月曆 Calendar</div>
+              <div class="s">Month View</div>
+            </a>
+            <a class="quick-btn" href="./sites.html">
+              <div class="k">案場 Site</div>
+              <div class="s">Region / Ranking</div>
+            </a>
+            <a class="quick-btn" href="./events.html">
+              <div class="k">活動 Event</div>
+              <div class="s">Meeting / Survey</div>
+            </a>
+            <a class="quick-btn" href="./members.html">
+              <div class="k">人員 Member</div>
+              <div class="s">Roster / Ranking</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="errorBox"></div>
     </section>
-
-    <section class="dashboard">
-      <div class="left-stack">
-        <div class="panel gold">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">重點布告欄 Notice</div>
-              <div class="panel-sub">Pinned / Photo</div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="notice-wrap" id="noticeList">
-              <div class="empty">Loading...</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel blue">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">活動日曆 Calendar</div>
-              <div class="panel-sub">Event / Meeting / Survey / Site</div>
-            </div>
-          </div>
-
-          <div class="status-box" id="statusBox">Loading...</div>
-
-          <div class="fc-wrap">
-            <div id="calendar"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="right-stack">
-        <div class="panel green">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">人員總覽 Member</div>
-              <div class="panel-sub">Group / Ranking</div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="member-summary">
-              <div>
-                <div class="mini-stat-grid">
-                  <div class="mini-stat">
-                    <div class="k">專案組 Project</div>
-                    <div class="v" id="groupProject">0</div>
-                  </div>
-                  <div class="mini-stat">
-                    <div class="k">機動組 Rapid Response</div>
-                    <div class="v" id="groupRapid">0</div>
-                  </div>
-                  <div class="mini-stat">
-                    <div class="k">維運組 O&M</div>
-                    <div class="v" id="groupOM">0</div>
-                  </div>
-                  <div class="mini-stat">
-                    <div class="k">後勤組 Support</div>
-                    <div class="v" id="groupSupport">0</div>
-                  </div>
-                  <div class="mini-stat">
-                    <div class="k">設計規劃組 Design</div>
-                    <div class="v" id="groupDesign">0</div>
-                  </div>
-                  <div class="mini-stat">
-                    <div class="k">總人數 Total</div>
-                    <div class="v" id="groupTotal">0</div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="rank-list" id="memberGroupRank"></div>
-              </div>
-            </div>
-
-            <div style="height:14px"></div>
-
-            <div class="member-grid" id="memberGrid">
-              <div class="empty">Loading...</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel orange">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">活動內容 Detail</div>
-              <div class="panel-sub">URL Auto Link</div>
-            </div>
-          </div>
-          <div class="panel-body" id="detailBox">
-            <div class="detail-empty">Select Event</div>
-          </div>
-        </div>
-
-        <div class="panel purple">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">近期活動 Upcoming</div>
-              <div class="panel-sub">Recent 8</div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="upcoming-list" id="upcomingList">
-              <div class="empty">Loading...</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel green">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">區域與案場排行 Ranking</div>
-              <div class="panel-sub">Region / Site</div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="site-summary-grid">
-              <div>
-                <div class="rank-list" id="regionRank"></div>
-              </div>
-              <div>
-                <div class="rank-list" id="siteRank"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="footer-note">Hero: /assets/hero.jpg　Audio: /assets/bg.mp4</div>
   </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item active" href="./index.html">
+      <div class="nav-ico">📢</div>
+      <div>公告</div>
+    </a>
+    <a class="nav-item" href="./events.html">
+      <div class="nav-ico">📋</div>
+      <div>活動</div>
+    </a>
+    <a class="nav-item" href="./calendar.html">
+      <div class="nav-ico">🗓️</div>
+      <div>月曆</div>
+    </a>
+    <a class="nav-item" href="./sites.html">
+      <div class="nav-ico">📍</div>
+      <div>案場</div>
+    </a>
+    <a class="nav-item" href="./members.html">
+      <div class="nav-ico">👥</div>
+      <div>人員</div>
+    </a>
+  </nav>
 
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec';
 
-    let calendar = null;
     let allEvents = [];
     let allAnnouncements = [];
-    let allMembers = [];
-
-    const GROUP_LABEL = {
-      '專案組': 'Project',
-      '機動組': 'Rapid Response',
-      '維運組': 'O&M',
-      '後勤組': 'Support',
-      '設計規劃組': 'Design'
-    };
 
     function $(id){ return document.getElementById(id); }
 
@@ -730,33 +581,23 @@
       return '#4a90e2';
     }
 
-    function heroFallback(){
-      $('heroPhotoWrap').innerHTML = '<div class="photo-fallback">/assets/hero.jpg</div>';
-    }
-    window.heroFallback = heroFallback;
-
-    function setStatus(text, isErr=false){
-      $('statusBox').innerHTML = isErr ? `<div class="err">${safe(text)}</div>` : safe(text);
-    }
-
     function normalizeEvents(raw){
       if(!Array.isArray(raw)) return [];
       return raw.map(e=>{
         const p = e && e.extendedProps ? e.extendedProps : {};
-        const type = t(p.eventType,'活動');
         return {
-          id: t(e.id),
-          title: t(e.title,'Untitled'),
-          start: t(e.start),
-          end: t(e.end),
-          allDay: !!e.allDay,
-          color: t(e.color, typeColor(type)),
+          id:t(e.id),
+          title:t(e.title),
+          start:t(e.start),
+          end:t(e.end),
+          allDay:!!e.allDay,
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
           extendedProps:{
             location:t(p.location),
             description:t(p.description),
             updateAt:t(p.updateAt),
             region:t(p.region,'未分類'),
-            eventType:type
+            eventType:t(p.eventType,'活動')
           }
         };
       });
@@ -775,19 +616,6 @@
       }));
     }
 
-    function normalizeMembers(raw){
-      if(!Array.isArray(raw)) return [];
-      return raw.map(m=>({
-        id:t(m.id),
-        name:t(m.name),
-        groupName:t(m.groupName,'專案組'),
-        role:t(m.role),
-        photoUrl:t(m.photoUrl),
-        sortOrder:Number(m.sortOrder || 9999),
-        updateAt:t(m.updateAt)
-      }));
-    }
-
     function linkify(text){
       const raw = safe(text || '');
       return raw.replace(
@@ -796,96 +624,33 @@
       );
     }
 
-    function groupCountMap(members){
-      const map = {
-        '專案組':0,
-        '機動組':0,
-        '維運組':0,
-        '後勤組':0,
-        '設計規劃組':0
-      };
-      members.forEach(m=>{
-        const g = t(m.groupName,'專案組');
-        map[g] = (map[g] || 0) + 1;
-      });
-      return map;
+    function setStats(){
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth();
+
+      const monthCount = allEvents.filter(e=>{
+        const d = parseDate(e.start);
+        return d && d.getFullYear() === y && d.getMonth() === m;
+      }).length;
+
+      const siteCount = allEvents.filter(e=>t(e.extendedProps?.eventType) === '案場').length;
+      const pinnedCount = allAnnouncements.filter(a=>!!a.isPinned).length;
+
+      $('statNoticeCount').textContent = String(allAnnouncements.length);
+      $('statMonthCount').textContent = String(monthCount);
+      $('statSiteCount').textContent = String(siteCount);
+      $('statPinnedCount').textContent = String(pinnedCount);
     }
 
-    function rankBadge(i){
-      if(i===0) return ['🥇','m1'];
-      if(i===1) return ['🥈','m2'];
-      if(i===2) return ['🥉','m3'];
-      return [String(i+1),'m0'];
-    }
-
-    function renderRank(boxId, rows){
-      const box = $(boxId);
-      if(!rows.length){
-        box.innerHTML = '<div class="empty">No Data</div>';
-        return;
-      }
-      box.innerHTML = rows.map((row,i)=>{
-        const [medal, cls] = rankBadge(i);
-        return `
-          <div class="rank-row">
-            <div class="medal ${cls}">${medal}</div>
-            <div>
-              <div class="rank-name">${safe(t(row.name))}</div>
-              <div class="rank-sub">${safe(t(row.sub || ''))}</div>
-            </div>
-            <div class="rank-num">${safe(String(row.count))}</div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderMemberSummary(members){
-      const map = groupCountMap(members);
-
-      $('groupProject').textContent = String(map['專案組'] || 0);
-      $('groupRapid').textContent = String(map['機動組'] || 0);
-      $('groupOM').textContent = String(map['維運組'] || 0);
-      $('groupSupport').textContent = String(map['後勤組'] || 0);
-      $('groupDesign').textContent = String(map['設計規劃組'] || 0);
-      $('groupTotal').textContent = String(members.length);
-      $('statMemberCount').textContent = String(members.length);
-
-      const rank = Object.keys(map).map(name=>({
-        name:name,
-        sub:GROUP_LABEL[name] || '',
-        count:map[name]
-      })).sort((a,b)=>b.count-a.count);
-
-      renderRank('memberGroupRank', rank);
-    }
-
-    function renderMembers(members){
-      $('memberGrid').innerHTML = members.length ? members.slice(0,8).map(m=>`
-        <div class="member-card">
-          <div class="member-photo">
-            ${
-              t(m.photoUrl)
-              ? `<img src="${safe(t(m.photoUrl))}" alt="${safe(t(m.name))}" onerror="this.outerHTML='<div class=&quot;member-fallback&quot;>👤</div>'">`
-              : `<div class="member-fallback">👤</div>`
-            }
-          </div>
-          <div class="member-info">
-            <div class="member-name">${safe(t(m.name))}</div>
-            <div class="member-role">${safe(t(m.role,'—'))}</div>
-            <div class="member-group">${safe(t(m.groupName))} ${safe(GROUP_LABEL[t(m.groupName)] || '')}</div>
-          </div>
-        </div>
-      `).join('') : '<div class="empty">No Data</div>';
-    }
-
-    function renderAnnouncements(list){
+    function renderAnnouncements(){
       const box = $('noticeList');
-      if(!list.length){
+      if(!allAnnouncements.length){
         box.innerHTML = '<div class="empty">No Data</div>';
         return;
       }
 
-      box.innerHTML = list.slice(0,3).map(item=>{
+      box.innerHTML = allAnnouncements.slice(0,3).map(item=>{
         const photo = t(item.photoUrl)
           ? `<div class="notice-photo"><img src="${safe(t(item.photoUrl))}" alt="${safe(t(item.title))}"></div>`
           : '';
@@ -907,226 +672,53 @@
       }).join('');
     }
 
-    function renderDetail(eventObj){
-      if(!eventObj){
-        $('detailBox').innerHTML = '<div class="detail-empty">Select Event</div>';
-        return;
-      }
-
-      const type = t(eventObj.extendedProps?.eventType,'活動');
-      const region = t(eventObj.extendedProps?.region,'未分類');
-      const location = t(eventObj.extendedProps?.location,'—');
-      const desc = t(eventObj.extendedProps?.description,'—');
-      const updateAt = t(eventObj.extendedProps?.updateAt,'—');
-
-      const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
-
-      $('detailBox').innerHTML = `
-        <div class="detail-title">${safe(t(eventObj.title))}</div>
-        <div class="tag-row" style="margin-bottom:12px">
-          <span class="tag ${typeClass}">${safe(type)}</span>
-          <span class="tag t-gray">${safe(region)}</span>
-          <span class="tag t-gold">${eventObj.allDay ? 'All Day' : 'Timed'}</span>
-        </div>
-        <div class="detail-grid">
-          <div class="detail-item">
-            <div class="detail-label">開始 Start</div>
-            <div class="detail-value">${safe(fmt(eventObj.start,eventObj.allDay))}</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">結束 End</div>
-            <div class="detail-value">${safe(eventObj.end ? fmt(eventObj.end,eventObj.allDay) : '—')}</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">地點 Location</div>
-            <div class="detail-value">${safe(location)}</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">內容 Content</div>
-            <div class="detail-value">${linkify(desc)}</div>
-          </div>
-          <div class="detail-item">
-            <div class="detail-label">更新 Update</div>
-            <div class="detail-value">${safe(updateAt)}</div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderUpcoming(events){
-      const box = $('upcomingList');
-      if(!events.length){
-        box.innerHTML = '<div class="empty">No Data</div>';
-        return;
-      }
+    function renderMonthPreview(){
+      const box = $('monthPreview');
 
       const now = new Date();
-      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const y = now.getFullYear();
+      const m = now.getMonth();
 
-      const rows = events
+      const rows = allEvents
         .filter(e=>{
           const d = parseDate(e.start);
-          return d ? d >= new Date(startOfToday.getTime() - 86400000) : false;
+          return d && d.getFullYear() === y && d.getMonth() === m;
         })
         .sort((a,b)=>{
           const ta = parseDate(a.start) ? parseDate(a.start).getTime() : 0;
           const tb = parseDate(b.start) ? parseDate(b.start).getTime() : 0;
           return ta - tb;
         })
-        .slice(0,8);
+        .slice(0,5);
 
-      box.innerHTML = rows.length ? rows.map(e=>{
+      if(!rows.length){
+        box.innerHTML = '<div class="empty">No Data</div>';
+        return;
+      }
+
+      box.innerHTML = rows.map(e=>{
         const type = t(e.extendedProps?.eventType,'活動');
         const region = t(e.extendedProps?.region,'未分類');
-        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
         const color = t(e.color, typeColor(type));
+        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
 
         return `
-          <div class="upcoming-card" data-id="${safe(t(e.id))}">
-            <div class="upcoming-top">
+          <a class="event-card" href="./calendar.html?focus=${encodeURIComponent(t(e.id))}">
+            <div class="event-top">
               <div class="dot" style="background:${safe(color)}"></div>
               <div style="min-width:0;flex:1">
-                <div class="upcoming-title">${safe(t(e.title))}</div>
+                <div class="event-title">${safe(t(e.title))}</div>
                 <div class="tag-row">
                   <span class="tag ${typeClass}">${safe(type)}</span>
                   <span class="tag t-gray">${safe(region)}</span>
                 </div>
-                <div class="upcoming-meta">${safe(fmt(e.start,e.allDay))}
+                <div class="event-meta">${safe(fmt(e.start,e.allDay))}
 <br>${safe(t(e.extendedProps?.location))}</div>
               </div>
             </div>
-          </div>
+          </a>
         `;
-      }).join('') : '<div class="empty">No Data</div>';
-
-      box.querySelectorAll('[data-id]').forEach(el=>{
-        el.addEventListener('click', ()=>{
-          if(!calendar) return;
-          const fcEvent = calendar.getEventById(el.getAttribute('data-id'));
-          if(!fcEvent) return;
-          renderDetail(fcEvent);
-          if(fcEvent.start) calendar.gotoDate(fcEvent.start);
-        });
-      });
-    }
-
-    function renderRegionAndSiteRank(events){
-      const regionMap = {};
-      const siteMap = {};
-
-      events.forEach(e=>{
-        const region = t(e.extendedProps?.region,'未分類');
-        regionMap[region] = (regionMap[region] || 0) + 1;
-
-        if(t(e.extendedProps?.eventType) === '案場'){
-          const site = t(e.extendedProps?.location,'未命名案場');
-          siteMap[site] = (siteMap[site] || 0) + 1;
-        }
-      });
-
-      const regionRows = Object.keys(regionMap).map(name=>({
-        name:name,
-        sub:'Region',
-        count:regionMap[name]
-      })).sort((a,b)=>b.count-a.count);
-
-      const siteRows = Object.keys(siteMap).map(name=>({
-        name:name,
-        sub:'Site',
-        count:siteMap[name]
-      })).sort((a,b)=>b.count-a.count);
-
-      renderRank('regionRank', regionRows);
-      renderRank('siteRank', siteRows);
-    }
-
-    function updateStats(events){
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = now.getMonth();
-
-      const monthCount = events.filter(e=>{
-        const d = parseDate(e.start);
-        return d && d.getFullYear() === y && d.getMonth() === m;
-      }).length;
-
-      const upcomingCount = events.filter(e=>{
-        const d = parseDate(e.start);
-        return d && d >= new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      }).length;
-
-      const siteCount = events.filter(e=>t(e.extendedProps?.eventType)==='案場').length;
-
-      $('statMonthCount').textContent = String(monthCount);
-      $('statUpcomingCount').textContent = String(upcomingCount);
-      $('statSiteCount').textContent = String(siteCount);
-    }
-
-    async function loadEvents(){
-      setStatus('Event Loading...');
-      const data = await jsonp(API_URL + '?action=list_events');
-      if(!data || !data.ok) throw new Error('Event API Error');
-      allEvents = normalizeEvents(data.events || []);
-      return allEvents;
-    }
-
-    async function loadAnnouncements(){
-      const data = await jsonp(API_URL + '?action=list_announcements');
-      if(!data || !data.ok) throw new Error('Notice API Error');
-      allAnnouncements = normalizeAnnouncements(data.announcements || []);
-      renderAnnouncements(allAnnouncements);
-    }
-
-    async function loadMembers(){
-      const data = await jsonp(API_URL + '?action=list_members');
-      if(!data || !data.ok) throw new Error('Member API Error');
-      allMembers = normalizeMembers(data.members || []);
-      renderMemberSummary(allMembers);
-      renderMembers(allMembers);
-    }
-
-    function initCalendar(events){
-      calendar = new FullCalendar.Calendar($('calendar'),{
-        locale:'zh-tw',
-        initialView: window.innerWidth < 768 ? 'listMonth' : 'dayGridMonth',
-        height:'auto',
-        headerToolbar:{
-          left:'prev,next today',
-          center:'title',
-          right:'dayGridMonth,timeGridWeek,listMonth'
-        },
-        buttonText:{
-          today:'今天',
-          month:'月',
-          week:'週',
-          list:'列表'
-        },
-        dayMaxEvents:3,
-        navLinks:true,
-        events:events,
-        eventClick:function(info){
-          info.jsEvent.preventDefault();
-          renderDetail(info.event);
-        },
-        dateClick:function(info){
-          if(!calendar) return;
-          const found = calendar.getEvents().filter(e=>{
-            const d = parseDate(e.start);
-            return d &&
-              d.getFullYear() === info.date.getFullYear() &&
-              d.getMonth() === info.date.getMonth() &&
-              d.getDate() === info.date.getDate();
-          });
-          if(found.length) renderDetail(found[0]);
-          else $('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
-        }
-      });
-
-      calendar.render();
-
-      const first = calendar.getEvents()[0];
-      if(first) renderDetail(first);
-      else $('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
+      }).join('');
     }
 
     async function boot(){
@@ -1135,25 +727,24 @@
           throw new Error('API_URL Error');
         }
 
-        const events = await loadEvents();
-        await loadAnnouncements();
-        await loadMembers();
+        const [eventData, noticeData] = await Promise.all([
+          jsonp(API_URL + '?action=list_events'),
+          jsonp(API_URL + '?action=list_announcements')
+        ]);
 
-        updateStats(events);
-        renderUpcoming(events);
-        renderRegionAndSiteRank(events);
-        initCalendar(events);
+        if(!eventData || !eventData.ok) throw new Error('Event API Error');
+        if(!noticeData || !noticeData.ok) throw new Error('Notice API Error');
 
-        setStatus(`Loaded ${events.length}`);
+        allEvents = normalizeEvents(eventData.events || []);
+        allAnnouncements = normalizeAnnouncements(noticeData.announcements || []);
+
+        setStats();
+        renderAnnouncements();
+        renderMonthPreview();
       }catch(err){
-        console.error(err);
-        setStatus(err.message || 'Init Error', true);
+        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
         $('noticeList').innerHTML = '<div class="err">Notice Error</div>';
-        $('memberGrid').innerHTML = '<div class="err">Member Error</div>';
-        $('upcomingList').innerHTML = '<div class="err">Event Error</div>';
-        $('regionRank').innerHTML = '<div class="err">Rank Error</div>';
-        $('siteRank').innerHTML = '<div class="err">Rank Error</div>';
-        $('detailBox').innerHTML = '<div class="err">Detail Error</div>';
+        $('monthPreview').innerHTML = '<div class="err">Event Error</div>';
       }
     }
 
