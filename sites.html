@@ -21,12 +21,6 @@
       --gold:#d9a441;
       --gold-soft:#fff8eb;
 
-      --purple:#8e6dd8;
-      --purple-soft:#f3efff;
-
-      --orange:#f5a623;
-      --orange-soft:#fff7ea;
-
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
       --navh:78px;
@@ -34,7 +28,6 @@
     }
 
     *{box-sizing:border-box}
-
     html,body{
       margin:0;
       padding:0;
@@ -47,6 +40,7 @@
     }
 
     a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
 
     .page{
       max-width:var(--maxw);
@@ -178,50 +172,58 @@
     .map-wrap{
       display:grid;
       place-items:center;
-      min-height:330px;
       padding:8px 0 0;
     }
 
-    .tw-shape{
-      width:min(100%,360px);
-      aspect-ratio:.66/1;
+    .map-box{
       position:relative;
-      background:linear-gradient(180deg,#cfe7ff 0%,#dff3ea 52%,#f8f3d7 100%);
-      clip-path:polygon(58% 1%,68% 7%,74% 16%,80% 28%,78% 37%,83% 46%,80% 56%,85% 67%,79% 77%,72% 88%,64% 98%,52% 100%,42% 94%,34% 83%,29% 71%,24% 59%,20% 46%,23% 36%,28% 24%,36% 14%,46% 6%);
-      border:6px solid rgba(255,255,255,.95);
-      box-shadow:0 18px 28px rgba(74,144,226,.16);
+      width:min(100%,420px);
+      aspect-ratio:1050 / 1600;
+      border-radius:20px;
+      overflow:hidden;
+      background:#f6fbff;
+      box-shadow:inset 0 0 0 1px rgba(74,144,226,.08);
     }
 
-    .zone{
+    .map-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    .map-zone{
       position:absolute;
-      min-width:78px;
+      min-width:72px;
       min-height:40px;
       padding:0 14px;
       border-radius:999px;
-      background:#fff;
-      border:1px solid #d8e5f2;
+      border:1px solid #d6e1ed;
+      background:rgba(255,255,255,.96);
+      color:#203245;
+      font-size:13px;
+      font-weight:900;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:13px;
-      font-weight:900;
-      box-shadow:0 8px 16px rgba(74,144,226,.10);
+      box-shadow:0 10px 18px rgba(58,100,160,.10);
       cursor:pointer;
-      user-select:none;
+      backdrop-filter:blur(4px);
     }
 
-    .zone.active{
+    .map-zone.active{
       background:linear-gradient(180deg,#7bbcff,#4a90e2);
       color:#fff;
       border-color:#5ca2ef;
     }
 
-    .zone.north{top:12%;left:55%}
-    .zone.central{top:44%;left:34%}
-    .zone.south{top:76%;left:30%}
-    .zone.east{top:60%;left:62%}
-    .zone.island{top:58%;left:2%}
-    .zone.unknown{top:88%;left:55%}
+    .zone-north{top:15%;left:59%}
+    .zone-central{top:44%;left:33%}
+    .zone-south{top:72%;left:31%}
+    .zone-east{top:56%;left:69%}
+    .zone-islands{top:55%;left:5%}
+    .zone-other{top:86%;left:56%}
 
     .stats-grid{
       display:grid;
@@ -237,18 +239,8 @@
       padding:12px;
     }
 
-    .stat-k{
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .stat-v{
-      font-size:24px;
-      font-weight:900;
-      line-height:1;
-    }
+    .stat-k{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+    .stat-v{font-size:24px;font-weight:900;line-height:1}
 
     .rank-list{
       display:grid;
@@ -334,7 +326,6 @@
     .t-green{background:#eefaf5;color:#26815d}
     .t-blue{background:#eef6ff;color:#4a90e2}
     .t-gray{background:#f2f5f8;color:#6a7e93}
-    .t-gold{background:#fff8eb;color:#9d6a12}
 
     .empty{
       border:1px solid #dfeaf5;
@@ -402,6 +393,24 @@
       .brand-title{
         font-size:23px;
       }
+
+      .map-box{
+        width:min(100%,360px);
+      }
+
+      .map-zone{
+        min-width:64px;
+        min-height:36px;
+        font-size:12px;
+        padding:0 12px;
+      }
+
+      .zone-north{top:15%;left:58%}
+      .zone-central{top:44%;left:31%}
+      .zone-south{top:72%;left:29%}
+      .zone-east{top:56%;left:68%}
+      .zone-islands{top:55%;left:2%}
+      .zone-other{top:86%;left:54%}
     }
   </style>
 </head>
@@ -428,6 +437,7 @@
               <div class="panel-sub">Region / Site</div>
             </div>
           </div>
+
           <div class="panel-body">
             <div class="tab-row" id="regionTabs">
               <div class="tab active" data-region="全部">全部 All</div>
@@ -440,13 +450,15 @@
             </div>
 
             <div class="map-wrap">
-              <div class="tw-shape">
-                <div class="zone north" data-region="北部">北部</div>
-                <div class="zone central" data-region="中部">中部</div>
-                <div class="zone south" data-region="南部">南部</div>
-                <div class="zone east" data-region="東部">東部</div>
-                <div class="zone island" data-region="離島">離島</div>
-                <div class="zone unknown" data-region="未分類">未分類</div>
+              <div class="map-box">
+                <img src="./assets/tw-map-real.png" alt="Taiwan Map">
+
+                <button class="map-zone zone-north" data-region="北部" type="button">北部</button>
+                <button class="map-zone zone-central" data-region="中部" type="button">中部</button>
+                <button class="map-zone zone-south" data-region="南部" type="button">南部</button>
+                <button class="map-zone zone-east" data-region="東部" type="button">東部</button>
+                <button class="map-zone zone-islands" data-region="離島" type="button">離島</button>
+                <button class="map-zone zone-other" data-region="未分類" type="button">未分類</button>
               </div>
             </div>
 
@@ -504,7 +516,7 @@
         <section class="panel theme-gold">
           <div class="panel-head">
             <div>
-              <div class="panel-title">案場資訊</div>
+              <div class="panel-title">案場資料</div>
               <div class="panel-sub">Site / Frequency</div>
             </div>
           </div>
@@ -701,9 +713,11 @@
       document.querySelectorAll('.tab').forEach(el=>{
         el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
       });
-      document.querySelectorAll('.zone').forEach(el=>{
+
+      document.querySelectorAll('.map-zone').forEach(el=>{
         el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
       });
+
       $('statRegion').textContent = currentRegion;
     }
 
@@ -760,6 +774,7 @@
 
     function renderSiteList(){
       const rows = filteredSites();
+
       $('siteList').innerHTML = rows.length ? rows.map(e=>`
         <div class="site-card">
           <div class="site-title">${safe(t(e.title))}</div>
@@ -790,7 +805,7 @@
         });
       });
 
-      document.querySelectorAll('.zone').forEach(el=>{
+      document.querySelectorAll('.map-zone').forEach(el=>{
         el.addEventListener('click',()=>{
           applyRegion(el.getAttribute('data-region') || '全部');
         });
@@ -818,7 +833,7 @@
       }catch(err){
         $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
         $('regionRank').innerHTML = '<div class="err">Rank Error</div>';
-        $('siteRank').innerHTML = '<div class="err">Rank Error</div>';
+        $('siteRank').innerHTML = '<div class="err">Site Rank Error</div>';
         $('siteList').innerHTML = '<div class="err">Site Error</div>';
       }
     }
