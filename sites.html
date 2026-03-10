@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sites 案場</title>
+  <style>
+    :root{
+      --bg:#f4f8fc;
+      --panel:#ffffff;
+      --line:#d8e5f2;
+      --text:#1f3042;
+      --muted:#63788f;
+      --blue:#4a90e2;
+      --purple:#8e6dd8;
+      --orange:#f5a623;
+      --green:#2ea97d;
+      --gold:#d9a441;
+      --shadow:0 10px 24px rgba(58,100,160,.08);
+      --r:22px;
+      --navh:78px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(circle at top left, rgba(124,183,255,.18), transparent 26%),
+        linear-gradient(180deg,#f8fbff 0%,#eef5fc 100%);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      min-height:100vh;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .page{
+      max-width:980px;
+      margin:0 auto;
+      padding:16px 16px calc(var(--navh) + 18px);
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
+
+    .brand{display:flex;flex-direction:column;gap:4px}
+    .brand-kicker{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2px;
+      color:var(--green);
+      text-transform:uppercase;
+    }
+    .brand-title{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.2;
+    }
+
+    .panel{
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:16px;
+    }
+
+    .panel.green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
+    .panel.blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
+    .panel.gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff7eb)}
+
+    .panel-head{
+      padding:15px 16px;
+      border-bottom:1px solid #e9f1f8;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .panel-title{font-size:20px;font-weight:900}
+    .panel-sub{font-size:12px;font-weight:800;color:var(--muted);margin-top:4px}
+    .panel-body{padding:16px}
+
+    .map-wrap{
+      display:grid;
+      place-items:center;
+      min-height:320px;
+      padding:10px 0 4px;
+    }
+
+    .tw-shape{
+      width:min(100%,360px);
+      aspect-ratio:.66/1;
+      position:relative;
+      background:linear-gradient(180deg,#cfe7ff 0%,#dff3ea 52%,#f8f3d7 100%);
+      clip-path:polygon(58% 1%,68% 7%,74% 16%,80% 28%,78% 37%,83% 46%,80% 56%,85% 67%,79% 77%,72% 88%,64% 98%,52% 100%,42% 94%,34% 83%,29% 71%,24% 59%,20% 46%,23% 36%,28% 24%,36% 14%,46% 6%);
+      border:6px solid rgba(255,255,255,.95);
+      box-shadow:0 18px 28px rgba(74,144,226,.16);
+    }
+
+    .zone{
+      position:absolute;
+      min-width:78px;
+      min-height:40px;
+      padding:0 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #d8e5f2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:13px;
+      font-weight:900;
+      box-shadow:0 8px 16px rgba(74,144,226,.1);
+      cursor:pointer;
+    }
+
+    .zone.active{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
+
+    .zone.north{top:12%;left:55%}
+    .zone.central{top:44%;left:34%}
+    .zone.south{top:76%;left:30%}
+    .zone.east{top:60%;left:62%}
+    .zone.island{top:58%;left:2%}
+    .zone.unknown{top:88%;left:55%}
+
+    .tab-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .tab{
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid #d8e5f2;
+      background:#fff;
+      color:#39536d;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .stat{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:12px;
+    }
+
+    .stat-k{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .stat-v{
+      font-size:24px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .rank-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .rank-row{
+      display:grid;
+      grid-template-columns:46px 1fr auto;
+      gap:10px;
+      align-items:center;
+      padding:12px;
+      border:1px solid #e6eef7;
+      border-radius:14px;
+      background:#fff;
+    }
+
+    .medal{
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      font-weight:900;
+    }
+
+    .m1{background:#fff7dc;color:#b07b08}
+    .m2{background:#f1f5f9;color:#67798d}
+    .m3{background:#fff0e6;color:#b86a2c}
+    .m0{background:#eef6ff;color:#4a90e2}
+
+    .rank-name{font-size:15px;font-weight:900}
+    .rank-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px}
+    .rank-num{font-size:18px;font-weight:900}
+
+    .site-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .site-card{
+      border:1px solid #dfeaf5;
+      border-radius:18px;
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:14px;
+      display:grid;
+      gap:10px;
+    }
+
+    .site-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .site-meta{
+      font-size:14px;
+      font-weight:700;
+      color:#5e7388;
+      line-height:1.8;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .tag-row{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .t-green{background:#eefaf5;color:#26815d}
+    .t-blue{background:#eef6ff;color:#4a90e2}
+    .t-gray{background:#f2f5f8;color:#6a7e93}
+    .t-gold{background:#fff8eb;color:#9d6a12}
+
+    .empty{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:#fbfdff;
+      color:#6c8095;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .err{
+      border:1px solid #f0ccd2;
+      border-radius:16px;
+      background:#fff3f4;
+      color:#bb4252;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.8;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:1000;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(8px);
+      border-top:1px solid #dfe8f2;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      box-shadow:0 -8px 20px rgba(58,100,160,.08);
+      height:var(--navh);
+    }
+
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-size:11px;
+      font-weight:900;
+      color:#6b8198;
+    }
+
+    .nav-item.active{color:var(--green)}
+    .nav-ico{font-size:18px;line-height:1}
+
+    @media (max-width:760px){
+      .stats{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-kicker">Site Overview</div>
+        <div class="brand-title">案場 Site</div>
+      </div>
+    </div>
+
+    <section class="panel green">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">台灣分布 Taiwan</div>
+          <div class="panel-sub">Region / Site</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="tab-row" id="regionTabs">
+          <div class="tab active" data-region="全部">全部 All</div>
+          <div class="tab" data-region="北部">北部 North</div>
+          <div class="tab" data-region="中部">中部 Central</div>
+          <div class="tab" data-region="南部">南部 South</div>
+          <div class="tab" data-region="東部">東部 East</div>
+          <div class="tab" data-region="離島">離島 Islands</div>
+          <div class="tab" data-region="未分類">未分類 Other</div>
+        </div>
+
+        <div class="map-wrap">
+          <div class="tw-shape">
+            <div class="zone north" data-region="北部">北部</div>
+            <div class="zone central" data-region="中部">中部</div>
+            <div class="zone south" data-region="南部">南部</div>
+            <div class="zone east" data-region="東部">東部</div>
+            <div class="zone island" data-region="離島">離島</div>
+            <div class="zone unknown" data-region="未分類">未分類</div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-k">目前 Current</div>
+            <div class="stat-v" id="statRegion">全部</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">案場 Site</div>
+            <div class="stat-v" id="statSite">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">活動 Event</div>
+            <div class="stat-v" id="statEvent">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-k">顯示 Showing</div>
+            <div class="stat-v" id="statShow">0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel blue">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">區域排行 Region Rank</div>
+          <div class="panel-sub">1st / 2nd / 3rd</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="rank-list" id="regionRank">
+          <div class="empty">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel gold">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">案場排行 Site Rank</div>
+          <div class="panel-sub">Site / Frequency</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="rank-list" id="siteRank">
+          <div class="empty">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel green">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">案場清單 Site List</div>
+          <div class="panel-sub">Site Only</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="site-list" id="siteList">
+          <div class="empty">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <div id="errorBox"></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="./index.html">
+      <div class="nav-ico">📢</div>
+      <div>公告</div>
+    </a>
+    <a class="nav-item" href="./events.html">
+      <div class="nav-ico">📋</div>
+      <div>活動</div>
+    </a>
+    <a class="nav-item" href="./calendar.html">
+      <div class="nav-ico">🗓️</div>
+      <div>月曆</div>
+    </a>
+    <a class="nav-item active" href="./sites.html">
+      <div class="nav-ico">📍</div>
+      <div>案場</div>
+    </a>
+    <a class="nav-item" href="./members.html">
+      <div class="nav-ico">👥</div>
+      <div>人員</div>
+    </a>
+  </nav>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec';
+
+    let allEvents = [];
+    let currentRegion = '全部';
+
+    function $(id){ return document.getElementById(id); }
+
+    function safe(v){
+      return String(v == null ? '' : v).replace(/[&<>"']/g, s => (
+        {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]
+      ));
+    }
+
+    function t(v,d=''){
+      const s = String(v == null ? '' : v).trim();
+      return s || d;
+    }
+
+    function jsonp(url, timeoutMs=12000){
+      return new Promise((resolve,reject)=>{
+        const cb = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+        let done = false, timer = null, script = null;
+
+        function clean(){
+          if(timer) clearTimeout(timer);
+          if(script && script.parentNode) script.parentNode.removeChild(script);
+          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+        }
+
+        window[cb] = function(data){
+          if(done) return;
+          done = true;
+          clean();
+          resolve(data);
+        };
+
+        script = document.createElement('script');
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+        script.async = true;
+
+        script.onerror = function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Error'));
+        };
+
+        timer = setTimeout(function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Timeout'));
+        }, timeoutMs);
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function parseDate(v){
+      if(!v) return null;
+      const d = new Date(v);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function fmt(v, allDay){
+      const d = parseDate(v);
+      if(!d) return t(v,'—');
+      if(allDay){
+        return d.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+      }
+      return d.toLocaleString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+    }
+
+    function typeColor(type){
+      if(type === '案場') return '#2ea97d';
+      return '#4a90e2';
+    }
+
+    function normalizeEvents(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(e=>{
+        const p = e && e.extendedProps ? e.extendedProps : {};
+        return {
+          id:t(e.id),
+          title:t(e.title),
+          start:t(e.start),
+          end:t(e.end),
+          allDay:!!e.allDay,
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
+          extendedProps:{
+            location:t(p.location),
+            description:t(p.description),
+            updateAt:t(p.updateAt),
+            region:t(p.region,'未分類'),
+            eventType:t(p.eventType,'活動')
+          }
+        };
+      });
+    }
+
+    function queryRegion(){
+      const p = new URLSearchParams(window.location.search);
+      return t(p.get('region'),'全部');
+    }
+
+    function setQueryRegion(region){
+      const url = new URL(window.location.href);
+      if(!region || region === '全部') url.searchParams.delete('region');
+      else url.searchParams.set('region', region);
+      history.replaceState({},'',url.toString());
+    }
+
+    function rankBadge(i){
+      if(i===0) return ['🥇','m1'];
+      if(i===1) return ['🥈','m2'];
+      if(i===2) return ['🥉','m3'];
+      return [String(i+1),'m0'];
+    }
+
+    function renderRank(boxId, rows){
+      const box = $(boxId);
+      if(!rows.length){
+        box.innerHTML = '<div class="empty">No Data</div>';
+        return;
+      }
+
+      box.innerHTML = rows.map((row,i)=>{
+        const [medal, cls] = rankBadge(i);
+        return `
+          <div class="rank-row">
+            <div class="medal ${cls}">${medal}</div>
+            <div>
+              <div class="rank-name">${safe(t(row.name))}</div>
+              <div class="rank-sub">${safe(t(row.sub || ''))}</div>
+            </div>
+            <div class="rank-num">${safe(String(row.count))}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setActiveRegion(){
+      document.querySelectorAll('.tab').forEach(el=>{
+        el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
+      });
+      document.querySelectorAll('.zone').forEach(el=>{
+        el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
+      });
+      $('statRegion').textContent = currentRegion;
+    }
+
+    function siteOnly(){
+      return allEvents.filter(e=>t(e.extendedProps?.eventType)==='案場');
+    }
+
+    function filteredSites(){
+      const rows = siteOnly();
+      if(currentRegion === '全部') return rows;
+      return rows.filter(e=>t(e.extendedProps?.region,'未分類')===currentRegion);
+    }
+
+    function renderStats(){
+      const siteRows = siteOnly();
+      const filtered = filteredSites();
+      const eventRows = allEvents.filter(e=>{
+        if(currentRegion === '全部') return true;
+        return t(e.extendedProps?.region,'未分類')===currentRegion;
+      });
+
+      $('statSite').textContent = String(siteRows.length);
+      $('statEvent').textContent = String(eventRows.length);
+      $('statShow').textContent = String(filtered.length);
+    }
+
+    function renderRegionRank(){
+      const regionMap = {};
+      allEvents.forEach(e=>{
+        const region = t(e.extendedProps?.region,'未分類');
+        regionMap[region] = (regionMap[region] || 0) + 1;
+      });
+
+      const rows = Object.keys(regionMap)
+        .map(name=>({name:name,sub:'Region',count:regionMap[name]}))
+        .sort((a,b)=>b.count-a.count);
+
+      renderRank('regionRank', rows);
+    }
+
+    function renderSiteRank(){
+      const siteMap = {};
+      siteOnly().forEach(e=>{
+        const name = t(e.extendedProps?.location,'未命名案場');
+        siteMap[name] = (siteMap[name] || 0) + 1;
+      });
+
+      const rows = Object.keys(siteMap)
+        .map(name=>({name:name,sub:'Site',count:siteMap[name]}))
+        .sort((a,b)=>b.count-a.count);
+
+      renderRank('siteRank', rows);
+    }
+
+    function renderSiteList(){
+      const rows = filteredSites();
+      $('siteList').innerHTML = rows.length ? rows.map(e=>`
+        <div class="site-card">
+          <div class="site-title">${safe(t(e.title))}</div>
+          <div class="tag-row">
+            <span class="tag t-green">案場 Site</span>
+            <span class="tag t-blue">${safe(t(e.extendedProps?.region,'未分類'))}</span>
+            <span class="tag t-gray">${e.allDay ? 'All Day' : 'Timed'}</span>
+          </div>
+          <div class="site-meta">${safe(fmt(e.start,e.allDay))}${e.end ? ' → ' + safe(fmt(e.end,e.allDay)) : ''}
+<br>${safe(t(e.extendedProps?.location))}
+<br>${safe(t(e.extendedProps?.description))}</div>
+        </div>
+      `).join('') : '<div class="empty">No Data</div>';
+    }
+
+    function applyRegion(region){
+      currentRegion = region || '全部';
+      setActiveRegion();
+      renderStats();
+      renderSiteList();
+      setQueryRegion(region);
+    }
+
+    function bindRegion(){
+      document.querySelectorAll('.tab').forEach(el=>{
+        el.addEventListener('click',()=>{
+          applyRegion(el.getAttribute('data-region') || '全部');
+        });
+      });
+
+      document.querySelectorAll('.zone').forEach(el=>{
+        el.addEventListener('click',()=>{
+          applyRegion(el.getAttribute('data-region') || '全部');
+        });
+      });
+    }
+
+    async function boot(){
+      try{
+        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
+          throw new Error('API_URL Error');
+        }
+
+        const data = await jsonp(API_URL + '?action=list_events');
+        if(!data || !data.ok) throw new Error('Event API Error');
+
+        allEvents = normalizeEvents(data.events || []);
+        renderRegionRank();
+        renderSiteRank();
+        bindRegion();
+
+        const q = queryRegion();
+        const allowed = ['全部','北部','中部','南部','東部','離島','未分類'];
+        currentRegion = allowed.includes(q) ? q : '全部';
+        applyRegion(currentRegion);
+      }catch(err){
+        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
+        $('regionRank').innerHTML = '<div class="err">Rank Error</div>';
+        $('siteRank').innerHTML = '<div class="err">Rank Error</div>';
+        $('siteList').innerHTML = '<div class="err">Site Error</div>';
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
