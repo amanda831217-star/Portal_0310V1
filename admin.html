@@ -312,7 +312,6 @@
     .t-gold{background:#fff8eb;color:#9d6a12}
     .t-gray{background:#f2f5f8;color:#6a7e93}
     .t-red{background:#ffe9ec;color:#bc4152}
-    .t-teal{background:#eefaf2;color:#15803d}
 
     .item-meta{
       font-size:14px;
@@ -417,7 +416,6 @@
                     <option value="會議">會議 Meeting</option>
                     <option value="現勘">現勘 Survey</option>
                     <option value="案場">案場 Site</option>
-                    <option value="維運">維運 O&amp;M</option>
                   </select>
                 </div>
 
@@ -749,7 +747,6 @@
       if(type === '會議') return '#8e6dd8';
       if(type === '現勘') return '#f5a623';
       if(type === '案場') return '#2ea97d';
-      if(type === '維運') return '#16a34a';
       return '#4a90e2';
     }
 
@@ -1114,14 +1111,7 @@
         const type = t(e.extendedProps?.eventType,'活動');
         const color = t(e.color, typeColor(type));
         const region = t(e.extendedProps?.region,'未分類');
-        const typeMap = {
-  '會議': 't-purple',
-  '現勘': 't-orange',
-  '案場': 't-green',
-  '維運': 't-teal'
-};
-
-const typeClass = typeMap[type] || 't-blue';
+        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
 
         return `
           <div class="item">
