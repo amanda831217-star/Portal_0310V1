@@ -648,7 +648,14 @@
         const location = t(e.extendedProps?.location);
         const desc = t(e.extendedProps?.description);
         const color = t(e.color, typeColor(type));
-        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue': (type === '維運' ? 't-green' : 't-blue')));
+        const typeMap = {
+  '會議': 't-purple',
+  '現勘': 't-orange',
+  '案場': 't-green',
+  '維運': 't-teal'
+};
+
+const typeClass = typeMap[type] || 't-blue';
 
         return `
           <a class="event-card" href="./calendar.html?focus=${encodeURIComponent(t(e.id))}">
