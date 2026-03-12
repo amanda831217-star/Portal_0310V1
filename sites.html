@@ -4,9 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sites 案場</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <style>
     :root{
       --bg:#f4f8fc;
@@ -24,19 +21,10 @@
       --gold:#d9a441;
       --gold-soft:#fff8eb;
 
-      --purple:#8e6dd8;
-      --purple-soft:#f3efff;
-
-      --orange:#f5a623;
-      --orange-soft:#fff7ea;
-
-      --teal:#16a34a;
-      --teal-soft:#eefaf2;
-
       --shadow:0 10px 24px rgba(58,100,160,.08);
       --r:22px;
       --navh:78px;
-      --maxw:1240px;
+      --maxw:1180px;
     }
 
     *{box-sizing:border-box}
@@ -121,7 +109,7 @@
 
     .layout{
       display:grid;
-      grid-template-columns:1.06fr .94fr;
+      grid-template-columns:1.02fr .98fr;
       gap:16px;
     }
 
@@ -152,7 +140,6 @@
     .theme-green .panel-head{background:linear-gradient(180deg,#f4fff9,#eefaf5)}
     .theme-blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
     .theme-gold .panel-head{background:linear-gradient(180deg,#fffdf7,#fff8eb)}
-    .theme-purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
 
     .tab-row{
       display:flex;
@@ -252,19 +239,8 @@
       padding:12px;
     }
 
-    .stat-k{
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      margin-bottom:6px;
-      line-height:1.4;
-    }
-
-    .stat-v{
-      font-size:24px;
-      font-weight:900;
-      line-height:1;
-    }
+    .stat-k{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
+    .stat-v{font-size:24px;font-weight:900;line-height:1}
 
     .rank-list{
       display:grid;
@@ -301,60 +277,6 @@
     .rank-name{font-size:15px;font-weight:900}
     .rank-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:2px}
     .rank-num{font-size:18px;font-weight:900}
-
-    .chart-wrap{
-      display:grid;
-      gap:12px;
-    }
-
-    .chart-box{
-      position:relative;
-      width:100%;
-      max-width:360px;
-      margin:0 auto;
-      aspect-ratio:1/1;
-    }
-
-    .chart-legend{
-      display:grid;
-      gap:8px;
-    }
-
-    .legend-row{
-      display:grid;
-      grid-template-columns:16px 1fr auto auto;
-      gap:10px;
-      align-items:center;
-      padding:10px 12px;
-      border:1px solid #e6eef7;
-      border-radius:14px;
-      background:#fff;
-    }
-
-    .legend-dot{
-      width:12px;
-      height:12px;
-      border-radius:999px;
-    }
-
-    .legend-name{
-      font-size:14px;
-      font-weight:900;
-    }
-
-    .legend-count{
-      font-size:14px;
-      font-weight:900;
-      color:#27415c;
-    }
-
-    .legend-pct{
-      font-size:13px;
-      font-weight:900;
-      color:#64809d;
-      min-width:54px;
-      text-align:right;
-    }
 
     .site-list{
       display:grid;
@@ -401,11 +323,8 @@
       font-weight:900;
     }
 
-    .t-blue{background:#eef6ff;color:#4a90e2}
-    .t-purple{background:#f3efff;color:#7b57d0}
-    .t-orange{background:#fff7ea;color:#c98211}
     .t-green{background:#eefaf5;color:#26815d}
-    .t-teal{background:#eefaf2;color:#15803d}
+    .t-blue{background:#eef6ff;color:#4a90e2}
     .t-gray{background:#f2f5f8;color:#6a7e93}
 
     .empty{
@@ -515,7 +434,7 @@
           <div class="panel-head">
             <div>
               <div class="panel-title">台灣分布 Taiwan</div>
-              <div class="panel-sub">Region / Category</div>
+              <div class="panel-sub">Region / Site</div>
             </div>
           </div>
 
@@ -549,28 +468,12 @@
                 <div class="stat-v" id="statRegion">全部</div>
               </div>
               <div class="stat-card">
-                <div class="stat-k">全部 Total</div>
-                <div class="stat-v" id="statTotal">0</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-k">活動 Event</div>
-                <div class="stat-v" id="statEvent">0</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-k">會議 Meeting</div>
-                <div class="stat-v" id="statMeeting">0</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-k">現勘 Survey</div>
-                <div class="stat-v" id="statSurvey">0</div>
-              </div>
-              <div class="stat-card">
                 <div class="stat-k">案場 Site</div>
                 <div class="stat-v" id="statSite">0</div>
               </div>
               <div class="stat-card">
-                <div class="stat-k">維運 O&amp;M</div>
-                <div class="stat-v" id="statOM">0</div>
+                <div class="stat-k">活動 Event</div>
+                <div class="stat-v" id="statEvent">0</div>
               </div>
               <div class="stat-card">
                 <div class="stat-k">顯示 Showing</div>
@@ -606,25 +509,6 @@
           <div class="panel-body">
             <div class="rank-list" id="regionRank">
               <div class="empty">Loading...</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel theme-purple">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">類別分析 Category Analysis</div>
-              <div class="panel-sub">Count / %</div>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="chart-wrap">
-              <div class="chart-box">
-                <canvas id="typePieChart"></canvas>
-              </div>
-              <div class="chart-legend" id="typeLegend">
-                <div class="empty">Loading...</div>
-              </div>
             </div>
           </div>
         </section>
@@ -676,17 +560,6 @@
 
     let allEvents = [];
     let currentRegion = '全部';
-    let pieChart = null;
-
-    const TYPE_ORDER = ['活動','會議','現勘','案場','維運'];
-
-    const TYPE_META = {
-      '活動': { label: '活動 Event', color: '#4a90e2', tagClass:'t-blue' },
-      '會議': { label: '會議 Meeting', color: '#8e6dd8', tagClass:'t-purple' },
-      '現勘': { label: '現勘 Survey', color: '#f5a623', tagClass:'t-orange' },
-      '案場': { label: '案場 Site', color: '#2ea97d', tagClass:'t-green' },
-      '維運': { label: '維運 O&M', color: '#16a34a', tagClass:'t-teal' }
-    };
 
     function $(id){ return document.getElementById(id); }
 
@@ -768,6 +641,11 @@
       });
     }
 
+    function typeColor(type){
+      if(type === '案場') return '#2ea97d';
+      return '#4a90e2';
+    }
+
     function normalizeEvents(raw){
       if(!Array.isArray(raw)) return [];
       return raw.map(e=>{
@@ -778,7 +656,7 @@
           start:t(e.start),
           end:t(e.end),
           allDay:!!e.allDay,
-          color:t(e.color, '#4a90e2'),
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
           extendedProps:{
             location:t(p.location),
             description:t(p.description),
@@ -791,4 +669,176 @@
     }
 
     function queryRegion(){
-      const
+      const p = new URLSearchParams(window.location.search);
+      return t(p.get('region'),'全部');
+    }
+
+    function setQueryRegion(region){
+      const url = new URL(window.location.href);
+      if(!region || region === '全部') url.searchParams.delete('region');
+      else url.searchParams.set('region', region);
+      history.replaceState({},'',url.toString());
+    }
+
+    function rankBadge(i){
+      if(i===0) return ['🥇','m1'];
+      if(i===1) return ['🥈','m2'];
+      if(i===2) return ['🥉','m3'];
+      return [String(i+1),'m0'];
+    }
+
+    function renderRank(boxId, rows){
+      const box = $(boxId);
+      if(!rows.length){
+        box.innerHTML = '<div class="empty">No Data</div>';
+        return;
+      }
+
+      box.innerHTML = rows.map((row,i)=>{
+        const [medal, cls] = rankBadge(i);
+        return `
+          <div class="rank-row">
+            <div class="medal ${cls}">${medal}</div>
+            <div>
+              <div class="rank-name">${safe(t(row.name))}</div>
+              <div class="rank-sub">${safe(t(row.sub || ''))}</div>
+            </div>
+            <div class="rank-num">${safe(String(row.count))}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setActiveRegion(){
+      document.querySelectorAll('.tab').forEach(el=>{
+        el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
+      });
+
+      document.querySelectorAll('.map-zone').forEach(el=>{
+        el.classList.toggle('active', el.getAttribute('data-region') === currentRegion);
+      });
+
+      $('statRegion').textContent = currentRegion;
+    }
+
+    function siteOnly(){
+      return allEvents.filter(e=>t(e.extendedProps?.eventType)==='案場');
+    }
+
+    function filteredSites(){
+      const rows = siteOnly();
+      if(currentRegion === '全部') return rows;
+      return rows.filter(e=>t(e.extendedProps?.region,'未分類')===currentRegion);
+    }
+
+    function renderStats(){
+      const siteRows = siteOnly();
+      const filtered = filteredSites();
+      const eventRows = allEvents.filter(e=>{
+        if(currentRegion === '全部') return true;
+        return t(e.extendedProps?.region,'未分類')===currentRegion;
+      });
+
+      $('statSite').textContent = String(siteRows.length);
+      $('statEvent').textContent = String(eventRows.length);
+      $('statShow').textContent = String(filtered.length);
+    }
+
+    function renderRegionRank(){
+      const regionMap = {};
+      allEvents.forEach(e=>{
+        const region = t(e.extendedProps?.region,'未分類');
+        regionMap[region] = (regionMap[region] || 0) + 1;
+      });
+
+      const rows = Object.keys(regionMap)
+        .map(name=>({name:name,sub:'Region',count:regionMap[name]}))
+        .sort((a,b)=>b.count-a.count);
+
+      renderRank('regionRank', rows);
+    }
+
+    function renderSiteRank(){
+      const siteMap = {};
+      siteOnly().forEach(e=>{
+        const name = t(e.extendedProps?.location,'未命名案場');
+        siteMap[name] = (siteMap[name] || 0) + 1;
+      });
+
+      const rows = Object.keys(siteMap)
+        .map(name=>({name:name,sub:'Site',count:siteMap[name]}))
+        .sort((a,b)=>b.count-a.count);
+
+      renderRank('siteRank', rows);
+    }
+
+    function renderSiteList(){
+      const rows = filteredSites();
+
+      $('siteList').innerHTML = rows.length ? rows.map(e=>`
+        <div class="site-card">
+          <div class="site-title">${safe(t(e.title))}</div>
+          <div class="tag-row">
+            <span class="tag t-green">案場 Site</span>
+            <span class="tag t-blue">${safe(t(e.extendedProps?.region,'未分類'))}</span>
+            <span class="tag t-gray">${e.allDay ? 'All Day' : 'Timed'}</span>
+          </div>
+          <div class="site-meta">${safe(fmt(e.start,e.allDay))}${e.end ? ' → ' + safe(fmt(e.end,e.allDay)) : ''}
+<br>${safe(t(e.extendedProps?.location))}
+<br>${safe(t(e.extendedProps?.description))}</div>
+        </div>
+      `).join('') : '<div class="empty">No Data</div>';
+    }
+
+    function applyRegion(region){
+      currentRegion = region || '全部';
+      setActiveRegion();
+      renderStats();
+      renderSiteList();
+      setQueryRegion(region);
+    }
+
+    function bindRegion(){
+      document.querySelectorAll('.tab').forEach(el=>{
+        el.addEventListener('click',()=>{
+          applyRegion(el.getAttribute('data-region') || '全部');
+        });
+      });
+
+      document.querySelectorAll('.map-zone').forEach(el=>{
+        el.addEventListener('click',()=>{
+          applyRegion(el.getAttribute('data-region') || '全部');
+        });
+      });
+    }
+
+    async function boot(){
+      try{
+        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
+          throw new Error('API_URL Error');
+        }
+
+        const data = await jsonp(API_URL + '?action=list_events');
+        if(!data || !data.ok) throw new Error('Event API Error');
+
+        allEvents = normalizeEvents(data.events || []);
+        renderRegionRank();
+        renderSiteRank();
+        bindRegion();
+
+        const q = queryRegion();
+        const allowed = ['全部','北部','中部','南部','東部','離島','未分類'];
+        currentRegion = allowed.includes(q) ? q : '全部';
+        applyRegion(currentRegion);
+      }catch(err){
+        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
+        $('regionRank').innerHTML = '<div class="err">Rank Error</div>';
+        $('siteRank').innerHTML = '<div class="err">Site Rank Error</div>';
+        $('siteList').innerHTML = '<div class="err">Site Error</div>';
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
