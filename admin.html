@@ -1114,7 +1114,7 @@
         const type = t(e.extendedProps?.eventType,'活動');
         const color = t(e.color, typeColor(type));
         const region = t(e.extendedProps?.region,'未分類');
-        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue') : (type === '維運' ? 't-teal' : 't-blue'));
+        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue' : (type === '維運' ? 't-teal' : 't-blue')));
 
         return `
           <div class="item">
