@@ -510,110 +510,140 @@
     </div>
 
     <div class="layout">
-  <div class="stack">
-
-    <section class="panel theme-green">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">台灣分布 Taiwan</div>
-          <div class="panel-sub">Region / Category</div>
-        </div>
-      </div>
-
-      <div class="panel-body">
-        <div class="tab-row" id="regionTabs">
-          <div class="tab active" data-region="全部">全部 All</div>
-          <div class="tab" data-region="北部">北部 North</div>
-          <div class="tab" data-region="中部">中部 Central</div>
-          <div class="tab" data-region="南部">南部 South</div>
-          <div class="tab" data-region="東部">東部 East</div>
-          <div class="tab" data-region="離島">離島 Islands</div>
-          <div class="tab" data-region="未分類">未分類 Other</div>
-        </div>
-
-        <div class="map-wrap">
-          <div class="map-box">
-            <img src="./assets/tw-map-reel.jpg" alt="Taiwan Map">
-
-            <button class="map-zone zone-north" data-region="北部" type="button">北部</button>
-            <button class="map-zone zone-central" data-region="中部" type="button">中部</button>
-            <button class="map-zone zone-south" data-region="南部" type="button">南部</button>
-            <button class="map-zone zone-east" data-region="東部" type="button">東部</button>
-            <button class="map-zone zone-islands" data-region="離島" type="button">離島</button>
-            <button class="map-zone zone-other" data-region="未分類" type="button">未分類</button>
+      <div class="stack">
+        <section class="panel theme-green">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">台灣分布 Taiwan</div>
+              <div class="panel-sub">Region / Category</div>
+            </div>
           </div>
-        </div>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-k">目前 Current</div>
-            <div class="stat-v" id="statRegion">全部</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-k">全部 Total</div>
-            <div class="stat-v" id="statTotal">0</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-k">案場 Site</div>
-            <div class="stat-v" id="statSite">0</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-k">維運 O&amp;M</div>
-            <div class="stat-v" id="statOM">0</div>
-          </div>
-        </div>
-      </div>
-    </section>
+          <div class="panel-body">
+            <div class="tab-row" id="regionTabs">
+              <div class="tab active" data-region="全部">全部 All</div>
+              <div class="tab" data-region="北部">北部 North</div>
+              <div class="tab" data-region="中部">中部 Central</div>
+              <div class="tab" data-region="南部">南部 South</div>
+              <div class="tab" data-region="東部">東部 East</div>
+              <div class="tab" data-region="離島">離島 Islands</div>
+              <div class="tab" data-region="未分類">未分類 Other</div>
+            </div>
 
-    <section class="panel theme-purple">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">類別分析 Category Analysis</div>
-          <div class="panel-sub">Site / O&amp;M Only</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="chart-wrap">
-          <div class="chart-box">
-            <canvas id="typePieChart"></canvas>
+            <div class="map-wrap">
+              <div class="map-box">
+                <img src="./assets/tw-map-reel.jpg" alt="Taiwan Map">
+
+                <button class="map-zone zone-north" data-region="北部" type="button">北部</button>
+                <button class="map-zone zone-central" data-region="中部" type="button">中部</button>
+                <button class="map-zone zone-south" data-region="南部" type="button">南部</button>
+                <button class="map-zone zone-east" data-region="東部" type="button">東部</button>
+                <button class="map-zone zone-islands" data-region="離島" type="button">離島</button>
+                <button class="map-zone zone-other" data-region="未分類" type="button">未分類</button>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-k">目前 Current</div>
+                <div class="stat-v" id="statRegion">全部</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">全部 Total</div>
+                <div class="stat-v" id="statTotal">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">活動 Event</div>
+                <div class="stat-v" id="statEvent">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">會議 Meeting</div>
+                <div class="stat-v" id="statMeeting">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">現勘 Survey</div>
+                <div class="stat-v" id="statSurvey">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">案場 Site</div>
+                <div class="stat-v" id="statSite">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">維運 O&amp;M</div>
+                <div class="stat-v" id="statOM">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-k">顯示 Showing</div>
+                <div class="stat-v" id="statShow">0</div>
+              </div>
+            </div>
           </div>
-          <div class="chart-legend" id="typeLegend">
-            <div class="empty">Loading...</div>
+        </section>
+
+        <section class="panel theme-green">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">案場清單 Site List</div>
+              <div class="panel-sub">Site Only</div>
+            </div>
           </div>
-        </div>
+          <div class="panel-body">
+            <div class="site-list" id="siteList">
+              <div class="empty">Loading...</div>
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
 
-    <section class="panel theme-blue">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">區域總計 Region Summary</div>
-          <div class="panel-sub">Site + O&amp;M</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="rank-list" id="regionRank">
-          <div class="empty">Loading...</div>
-        </div>
-      </div>
-    </section>
+      <div class="stack">
+        <section class="panel theme-blue">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">總計</div>
+              <div class="panel-sub">1st / 2nd / 3rd</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="rank-list" id="regionRank">
+              <div class="empty">Loading...</div>
+            </div>
+          </div>
+        </section>
 
-    <section class="panel theme-green">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">案場清單 Site List</div>
-          <div class="panel-sub">Site + O&amp;M</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="site-list" id="siteList">
-          <div class="empty">Loading...</div>
-        </div>
-      </div>
-    </section>
+        <section class="panel theme-purple">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">類別分析 Category Analysis</div>
+              <div class="panel-sub">Count / %</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="chart-wrap">
+              <div class="chart-box">
+                <canvas id="typePieChart"></canvas>
+              </div>
+              <div class="chart-legend" id="typeLegend">
+                <div class="empty">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-  </div>
-</div>
+        <section class="panel theme-gold">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">案場              <div class="panel-title">案場資訊</div>
+              <div class="panel-sub">Site / Frequency</div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="rank-list" id="siteRank">
+              <div class="empty">Loading...</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
     <div id="errorBox" style="margin-top:16px;"></div>
   </div>
