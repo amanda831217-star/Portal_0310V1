@@ -1,721 +1,346 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Events 活動</title>
-  <style>
-    :root{
-      --bg:#f4f8fc;
-      --panel:#ffffff;
-      --line:#d8e5f2;
-      --text:#1f3042;
-      --muted:#63788f;
 
-      --blue:#4a90e2;
-      --blue-soft:#eef6ff;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      --purple:#8e6dd8;
-      --purple-soft:#f3efff;
+<title>Events 活動</title>
 
-      --orange:#f5a623;
-      --orange-soft:#fff7ea;
+<style>
 
-      --green:#2ea97d;
-      --green-soft:#eefaf5;
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC";
+background:#f4f8fc;
+color:#1f3042
+}
 
-      --gold:#d9a441;
-      --gold-soft:#fff8eb;
+.top{
+background:#fff;
+padding:16px;
+border-bottom:1px solid #d8e5f2;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
 
-      --red:#d95c68;
-      --shadow:0 10px 24px rgba(58,100,160,.08);
-      --r:22px;
-      --navh:78px;
-      --maxw:1180px;
-    }
+.logo{
+font-size:22px;
+font-weight:900
+}
 
-    *{box-sizing:border-box}
+.nav a{
+margin-left:12px;
+text-decoration:none;
+font-weight:700;
+color:#4a90e2
+}
 
-    html,body{
-      margin:0;
-      padding:0;
-      background:
-        radial-gradient(circle at top left, rgba(124,183,255,.18), transparent 26%),
-        linear-gradient(180deg,#f8fbff 0%,#eef5fc 100%);
-      color:var(--text);
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-      min-height:100vh;
-    }
+.stats{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:12px;
+padding:16px
+}
 
-    a{color:inherit;text-decoration:none}
+.stat{
+background:#fff;
+padding:14px;
+border-radius:14px;
+text-align:center;
+box-shadow:0 6px 18px rgba(0,0,0,.06)
+}
 
-    .page{
-      max-width:var(--maxw);
-      margin:0 auto;
-      padding:16px 16px calc(var(--navh) + 18px);
-    }
+.stat-title{
+font-size:12px;
+color:#63788f
+}
 
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      background:rgba(255,255,255,.94);
-      border:1px solid var(--line);
-      border-radius:24px;
-      padding:14px 16px;
-      box-shadow:var(--shadow);
-      margin-bottom:16px;
-    }
+.stat-num{
+font-size:22px;
+font-weight:900
+}
 
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
+.list{
+padding:16px;
+display:grid;
+gap:12px
+}
 
-    .brand-kicker{
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:2px;
-      color:var(--blue);
-      text-transform:uppercase;
-    }
+.card{
+background:#fff;
+border-radius:16px;
+padding:16px;
+box-shadow:0 6px 18px rgba(0,0,0,.06)
+}
 
-    .brand-title{
-      font-size:26px;
-      font-weight:900;
-      line-height:1.15;
-    }
+.title{
+font-size:18px;
+font-weight:900
+}
 
-    .top-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+.tag{
+display:inline-block;
+padding:3px 10px;
+border-radius:999px;
+font-size:12px;
+margin-right:6px;
+margin-top:6px
+}
 
-    .btn{
-      appearance:none;
-      border:1px solid #bfd4ee;
-      background:#fff;
-      color:var(--text);
-      border-radius:14px;
-      padding:11px 16px;
-      min-height:44px;
-      font-size:14px;
-      font-weight:900;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      box-shadow:0 4px 10px rgba(74,144,226,.05);
-    }
+.t-blue{background:#eef6ff;color:#4a90e2}
+.t-purple{background:#f3efff;color:#7b57d0}
+.t-orange{background:#fff7ea;color:#c98211}
+.t-green{background:#eefaf5;color:#26815d}
+.t-teal{background:#eefaf2;color:#15803d}
 
-    .btn:hover{transform:translateY(-1px)}
-    .btn-blue{
-      background:linear-gradient(180deg,#7bbcff,#4a90e2);
-      color:#fff;
-      border-color:#5ca2ef;
-    }
+.meta{
+font-size:14px;
+margin-top:8px;
+white-space:pre-wrap;
+color:#5e7388
+}
 
-    .panel{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--line);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      margin-bottom:16px;
-    }
+a{
+color:#4a90e2;
+text-decoration:underline
+}
 
-    .panel-head{
-      padding:15px 16px;
-      border-bottom:1px solid #e9f1f8;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
+.search{
+padding:16px
+}
 
-    .panel-title{
-      font-size:20px;
-      font-weight:900;
-    }
+.search input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #d8e5f2
+}
 
-    .panel-sub{
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      margin-top:4px;
-    }
+.empty{
+padding:20px;
+text-align:center;
+color:#6c8095
+}
 
-    .panel-body{
-      padding:16px;
-    }
+@media(max-width:800px){
 
-    .theme-blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
-    .theme-purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
+.stats{
+grid-template-columns:1fr 1fr
+}
 
-    .toolbar{
-      display:grid;
-      gap:12px;
-    }
+}
 
-    .search{
-      width:100%;
-      border:1px solid #d9e5f2;
-      border-radius:14px;
-      background:#fff;
-      padding:12px 14px;
-      font-size:15px;
-      outline:none;
-      color:var(--text);
-    }
+</style>
 
-    .type-tabs{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .tab{
-      min-height:36px;
-      padding:0 12px;
-      border-radius:999px;
-      border:1px solid #d8e5f2;
-      background:#fff;
-      color:#39536d;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-      font-weight:900;
-      cursor:pointer;
-    }
-
-    .tab.active{
-      background:linear-gradient(180deg,#7bbcff,#4a90e2);
-      color:#fff;
-      border-color:#5ca2ef;
-    }
-
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-    }
-
-    .stat-card{
-      border:1px solid #dfeaf5;
-      border-radius:16px;
-      background:linear-gradient(180deg,#fff,#f9fbff);
-      padding:12px;
-    }
-
-    .stat-k{
-      font-size:12px;
-      font-weight:800;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .stat-v{
-      font-size:24px;
-      font-weight:900;
-      line-height:1;
-    }
-
-    .event-list{
-      display:grid;
-      gap:12px;
-    }
-
-    .event-card{
-      border:1px solid #dfeaf5;
-      border-radius:18px;
-      background:linear-gradient(180deg,#fff,#f9fbff);
-      padding:14px;
-      display:grid;
-      gap:10px;
-      cursor:pointer;
-    }
-
-    .event-card:hover{transform:translateY(-1px)}
-
-    .event-top{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-
-    .dot{
-      width:12px;
-      height:12px;
-      border-radius:999px;
-      margin-top:7px;
-      flex:0 0 auto;
-    }
-
-    .event-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1.35;
-    }
-
-    .tag-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:8px;
-    }
-
-    .tag{
-      min-height:28px;
-      padding:0 10px;
-      border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      font-size:12px;
-      font-weight:900;
-    }
-
-    .t-blue{background:#eef6ff;color:#4a90e2}
-    .t-purple{background:#f3efff;color:#7b57d0}
-    .t-orange{background:#fff7ea;color:#c98211}
-    .t-green{background:#eefaf5;color:#26815d}
-    .t-gray{background:#f2f5f8;color:#6a7e93}
-    .t-gold{background:#fff8eb;color:#9d6a12}
-    .t-teal{background:#eefaf2;color:#15803d}
-
-    .event-meta{
-      font-size:14px;
-      font-weight:700;
-      color:#5e7388;
-      line-height:1.85;
-      white-space:pre-wrap;
-      word-break:break-word;
-    }
-
-    .empty{
-      border:1px solid #dfeaf5;
-      border-radius:16px;
-      background:#fbfdff;
-      color:#6c8095;
-      padding:14px;
-      font-size:14px;
-      font-weight:800;
-    }
-
-    .err{
-      border:1px solid #f0ccd2;
-      border-radius:16px;
-      background:#fff3f4;
-      color:#bb4252;
-      padding:14px;
-      font-size:14px;
-      font-weight:800;
-      line-height:1.8;
-    }
-
-    .bottom-nav{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:0;
-      z-index:1000;
-      background:rgba(255,255,255,.97);
-      backdrop-filter:blur(10px);
-      border-top:1px solid #dfe8f2;
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      box-shadow:0 -8px 20px rgba(58,100,160,.08);
-      height:var(--navh);
-    }
-
-    .nav-item{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:4px;
-      font-size:11px;
-      font-weight:900;
-      color:#6b8198;
-    }
-
-    .nav-item.active{color:var(--blue)}
-    .nav-ico{font-size:18px;line-height:1}
-
-    @media (max-width:900px){
-      .stats-grid{
-        grid-template-columns:1fr 1fr;
-      }
-    }
-
-    @media (max-width:760px){
-      .page{
-        padding:12px 12px calc(var(--navh) + 18px);
-      }
-
-      .brand-title{
-        font-size:23px;
-      }
-    }
-  </style>
 </head>
+
 <body>
-  <div class="page">
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-kicker">Event Overview</div>
-        <div class="brand-title">活動 Event</div>
-      </div>
 
-      <div class="top-actions">
-        <a class="btn" href="./index.html">Home</a>
-        <a class="btn btn-blue" href="./admin.html">Admin</a>
-      </div>
-    </div>
+<div class="top">
 
-    <section class="panel theme-blue">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">活動篩選 Filter</div>
-          <div class="panel-sub">Event / Meeting / Survey / Site</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="toolbar">
-          <input id="searchInput" class="search" type="text" placeholder="搜尋 Search">
+<div class="logo">
+Events 活動
+</div>
 
-          <div class="type-tabs" id="typeTabs">
-            <div class="tab active" data-type="全部">全部 All</div>
-            <div class="tab" data-type="活動">活動 Event</div>
-            <div class="tab" data-type="會議">會議 Meeting</div>
-            <div class="tab" data-type="現勘">現勘 Survey</div>
-            <div class="tab" data-type="案場">案場 Site</div>
-            <div class="tab" data-type="維運">維運 O&amp;M</div>
-          </div>
+<div class="nav">
 
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-k">全部 All</div>
-              <div class="stat-v" id="countAll">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">活動 Event</div>
-              <div class="stat-v" id="countEvent">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">會議 Meeting</div>
-              <div class="stat-v" id="countMeeting">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">現勘 Survey</div>
-              <div class="stat-v" id="countSurvey">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">案場 Site</div>
-              <div class="stat-v" id="countSite">0</div>
-               <div class="stat-card">
-              <div class="stat-k">維運 O&amp;M</div>
-              <div class="stat-v" id="countOM">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">本月 Monthly</div>
-              <div class="stat-v" id="countMonth">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">近期 Upcoming</div>
-              <div class="stat-v" id="countUpcoming">0</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-k">顯示 Showing</div>
-              <div class="stat-v" id="countShowing">0</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<a href="./index.html">Home</a>
+<a href="./calendar.html">Calendar</a>
+<a href="./sites.html">Sites</a>
+<a href="./members.html">Members</a>
 
-    <section class="panel theme-purple">
-      <div class="panel-head">
-        <div>
-          <div class="panel-title">活動清單 Cards</div>
-          <div class="panel-sub">Tap to Calendar</div>
-        </div>
-      </div>
-      <div class="panel-body">
-        <div class="event-list" id="eventList">
-          <div class="empty">Loading...</div>
-        </div>
-      </div>
-    </section>
+</div>
 
-    <div id="errorBox"></div>
-  </div>
+</div>
 
-  <nav class="bottom-nav">
-    <a class="nav-item" href="./index.html">
-      <div class="nav-ico">📢</div>
-      <div>公告</div>
-    </a>
-    <a class="nav-item active" href="./events.html">
-      <div class="nav-ico">📋</div>
-      <div>活動</div>
-    </a>
-    <a class="nav-item" href="./calendar.html">
-      <div class="nav-ico">🗓️</div>
-      <div>月曆</div>
-    </a>
-    <a class="nav-item" href="./sites.html">
-      <div class="nav-ico">📍</div>
-      <div>案場</div>
-    </a>
-    <a class="nav-item" href="./members.html">
-      <div class="nav-ico">👥</div>
-      <div>人員</div>
-    </a>
-  </nav>
+<div class="stats">
 
-  <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec';
+<div class="stat">
+<div class="stat-title">全部</div>
+<div class="stat-num" id="countAll">0</div>
+</div>
 
-    let allEvents = [];
-    let activeType = '全部';
+<div class="stat">
+<div class="stat-title">活動</div>
+<div class="stat-num" id="countEvent">0</div>
+</div>
 
-    function $(id){ return document.getElementById(id); }
+<div class="stat">
+<div class="stat-title">會議</div>
+<div class="stat-num" id="countMeeting">0</div>
+</div>
 
-    function safe(v){
-      return String(v == null ? '' : v).replace(/[&<>"']/g, s => (
-        {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]
-      ));
-    }
+<div class="stat">
+<div class="stat-title">現勘</div>
+<div class="stat-num" id="countSurvey">0</div>
+</div>
 
-    function t(v,d=''){
-      const s = String(v == null ? '' : v).trim();
-      return s || d;
-    }
+<div class="stat">
+<div class="stat-title">案場</div>
+<div class="stat-num" id="countSite">0</div>
+</div>
 
-    function jsonp(url, timeoutMs=12000){
-      return new Promise((resolve,reject)=>{
-        const cb = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
-        let done = false, timer = null, script = null;
+<div class="stat">
+<div class="stat-title">維運</div>
+<div class="stat-num" id="countOM">0</div>
+</div>
 
-        function clean(){
-          if(timer) clearTimeout(timer);
-          if(script && script.parentNode) script.parentNode.removeChild(script);
-          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
-        }
+</div>
 
-        window[cb] = function(data){
-          if(done) return;
-          done = true;
-          clean();
-          resolve(data);
-        };
+<div class="search">
+<input id="searchBox" placeholder="搜尋活動 / 地點 / 說明">
+</div>
 
-        script = document.createElement('script');
-        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
-        script.async = true;
+<div class="list" id="eventList"></div>
 
-        script.onerror = function(){
-          if(done) return;
-          done = true;
-          clean();
-          reject(new Error('JSONP Error'));
-        };
 
-        timer = setTimeout(function(){
-          if(done) return;
-          done = true;
-          clean();
-          reject(new Error('JSONP Timeout'));
-        }, timeoutMs);
+<script>
 
-        document.body.appendChild(script);
-      });
-    }
+const API_URL="https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec"
 
-    function parseDate(v){
-      if(!v) return null;
-      const d = new Date(v);
-      return isNaN(d.getTime()) ? null : d;
-    }
+function $(id){return document.getElementById(id)}
 
-    function fmt(v, allDay){
-      const d = parseDate(v);
-      if(!d) return t(v,'—');
-      if(allDay){
-        return d.toLocaleDateString('zh-TW',{
-          year:'numeric',
-          month:'2-digit',
-          day:'2-digit',
-          weekday:'short'
-        });
-      }
-      return d.toLocaleString('zh-TW',{
-        year:'numeric',
-        month:'2-digit',
-        day:'2-digit',
-        hour:'2-digit',
-        minute:'2-digit',
-        hour12:false
-      });
-    }
+function t(v){return String(v||'').trim()}
 
-    function typeColor(type){
-      if(type === '會議') return '#8e6dd8';
-      if(type === '現勘') return '#f5a623';
-      if(type === '案場') return '#2ea97d';
-      if(type === '維運') return '#16a34a';
-      return '#4a90e2';
-    }
+function parseDate(v){
+const d=new Date(v)
+return isNaN(d.getTime())?null:d
+}
 
-    function normalizeEvents(raw){
-      if(!Array.isArray(raw)) return [];
-      return raw.map(e=>{
-        const p = e && e.extendedProps ? e.extendedProps : {};
-        return {
-          id:t(e.id),
-          title:t(e.title),
-          start:t(e.start),
-          end:t(e.end),
-          allDay:!!e.allDay,
-          color:t(e.color, typeColor(t(p.eventType,'活動'))),
-          extendedProps:{
-            location:t(p.location),
-            description:t(p.description),
-            updateAt:t(p.updateAt),
-            region:t(p.region,'未分類'),
-            eventType:t(p.eventType,'活動')
-          }
-        };
-      });
-    }
+function fmt(v){
+const d=parseDate(v)
+if(!d)return v
+return d.toLocaleString("zh-TW",{hour12:false})
+}
 
-    function setCounts(){
-      const now = new Date();
-      const y = now.getFullYear();
-      const m = now.getMonth();
-      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+function linkify(text){
+return text.replace(/https?:\/\/[^\s]+/g,function(url){
+return '<a href="'+url+'" target="_blank">'+url+'</a>'
+})
+}
 
-      $('countAll').textContent = String(allEvents.length);
-      $('countEvent').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='活動').length);
-      $('countMeeting').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='會議').length);
-      $('countSurvey').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='現勘').length);
-      $('countSite').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='案場').length);
-      $('countOM').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='維運').length);
-      $('countMonth').textContent = String(allEvents.filter(e=>{
-        const d = parseDate(e.start);
-        return d && d.getFullYear()===y && d.getMonth()===m;
-      }).length);
-      $('countUpcoming').textContent = String(allEvents.filter(e=>{
-        const d = parseDate(e.start);
-        return d && d >= startOfToday;
-      }).length);
-    }
+function typeClass(type){
 
-    function filteredEvents(){
-      const keyword = t($('searchInput').value).toLowerCase();
+if(type==="會議")return"t-purple"
+if(type==="現勘")return"t-orange"
+if(type==="案場")return"t-green"
+if(type==="維運")return"t-teal"
 
-      return allEvents.filter(e=>{
-        const type = t(e.extendedProps?.eventType,'活動');
-        const okType = activeType === '全部' || type === activeType;
+return"t-blue"
 
-        const text = [
-          t(e.title),
-          t(e.extendedProps?.location),
-          t(e.extendedProps?.description),
-          t(e.extendedProps?.region),
-          type
-        ].join(' ').toLowerCase();
+}
 
-        const okKeyword = !keyword || text.includes(keyword);
-        return okType && okKeyword;
-      });
-    }
+let allEvents=[]
 
-    function renderList(){
-      const rows = filteredEvents();
-      $('countShowing').textContent = String(rows.length);
+async function load(){
 
-      $('eventList').innerHTML = rows.length ? rows.map(e=>{
-        const type = t(e.extendedProps?.eventType,'活動');
-        const region = t(e.extendedProps?.region,'未分類');
-        const location = t(e.extendedProps?.location);
-        const desc = t(e.extendedProps?.description);
-        const color = t(e.color, typeColor(type));
-        const typeMap = {
-  '會議': 't-purple',
-  '現勘': 't-orange',
-  '案場': 't-green',
-  '維運': 't-teal'
-};
+const res=await fetch(API_URL+"?action=list_events")
+const json=await res.json()
 
-const typeClass = typeMap[type] || 't-blue';
+if(!json.ok)return
 
-        return `
-          <a class="event-card" href="./calendar.html?focus=${encodeURIComponent(t(e.id))}">
-            <div class="event-top">
-              <div class="dot" style="background:${safe(color)}"></div>
-              <div style="min-width:0;flex:1">
-                <div class="event-title">${safe(t(e.title))}</div>
-                <div class="tag-row">
-                  <span class="tag ${typeClass}">${safe(type)}</span>
-                  <span class="tag t-gray">${safe(region)}</span>
-                  <span class="tag t-gold">${e.allDay ? 'All Day' : 'Timed'}</span>
-                </div>
-                <div class="event-meta">${safe(fmt(e.start,e.allDay))}${e.end ? ' → ' + safe(fmt(e.end,e.allDay)) : ''}
-<br>${safe(location)}
-<br>${safe(desc)}</div>
-              </div>
-            </div>
-          </a>
-        `;
-      }).join('') : '<div class="empty">No Data</div>';
-    }
+allEvents=json.events||[]
 
-    function bindTabs(){
-      document.querySelectorAll('.tab').forEach(tab=>{
-        tab.addEventListener('click',()=>{
-          activeType = tab.getAttribute('data-type') || '全部';
-          document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-          tab.classList.add('active');
-          renderList();
-        });
-      });
-    }
+renderStats(allEvents)
+renderList(allEvents)
 
-    async function boot(){
-      try{
-        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
-          throw new Error('API_URL Error');
-        }
+}
 
-        const data = await jsonp(API_URL + '?action=list_events');
-        if(!data || !data.ok) throw new Error('Event API Error');
+function renderStats(events){
 
-        allEvents = normalizeEvents(data.events || []);
-        allEvents.sort((a,b)=>{
-          const ta = parseDate(a.start) ? parseDate(a.start).getTime() : 0;
-          const tb = parseDate(b.start) ? parseDate(b.start).getTime() : 0;
-          return ta - tb;
-        });
+$('countAll').textContent=events.length
 
-        setCounts();
-        bindTabs();
-        $('searchInput').addEventListener('input', renderList);
-        renderList();
-      }catch(err){
-        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
-        $('eventList').innerHTML = '<div class="err">Event Error</div>';
-      }
-    }
+$('countEvent').textContent=
+events.filter(e=>t(e.extendedProps?.eventType)==="活動").length
 
-    boot();
-  </script>
+$('countMeeting').textContent=
+events.filter(e=>t(e.extendedProps?.eventType)==="會議").length
+
+$('countSurvey').textContent=
+events.filter(e=>t(e.extendedProps?.eventType)==="現勘").length
+
+$('countSite').textContent=
+events.filter(e=>t(e.extendedProps?.eventType)==="案場").length
+
+$('countOM').textContent=
+events.filter(e=>t(e.extendedProps?.eventType)==="維運").length
+
+}
+
+function renderList(events){
+
+const keyword=t($('searchBox').value).toLowerCase()
+
+const rows=events.filter(e=>{
+
+if(!keyword)return true
+
+const text=[
+t(e.title),
+t(e.extendedProps?.location),
+t(e.extendedProps?.description),
+t(e.extendedProps?.region),
+t(e.extendedProps?.eventType)
+].join(" ").toLowerCase()
+
+return text.includes(keyword)
+
+})
+
+if(!rows.length){
+$('eventList').innerHTML='<div class="empty">No Event</div>'
+return
+}
+
+$('eventList').innerHTML=rows.map(e=>{
+
+const type=t(e.extendedProps?.eventType)||"活動"
+const region=t(e.extendedProps?.region)||"未分類"
+
+const start=fmt(e.start)
+const end=e.end?fmt(e.end):""
+
+const desc=linkify(t(e.extendedProps?.description))
+
+return`
+
+<div class="card">
+
+<div class="title">
+
+<span class="tag ${typeClass(type)}">${type}</span>
+
+${e.title}
+
+</div>
+
+<div class="meta">
+
+${start}${end?" → "+end:""}
+
+${t(e.extendedProps?.location)}
+
+${region}
+
+${desc}
+
+</div>
+
+</div>
+
+`
+
+}).join("")
+
+}
+
+$('searchBox').addEventListener("input",()=>renderList(allEvents))
+
+load()
+
+</script>
+
 </body>
 </html>
