@@ -1,346 +1,707 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events 活動</title>
+  <style>
+    :root{
+      --bg:#f4f8fc;
+      --panel:#ffffff;
+      --line:#d8e5f2;
+      --text:#1f3042;
+      --muted:#63788f;
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+      --blue:#4a90e2;
+      --blue-soft:#eef6ff;
 
-<title>Events 活動</title>
+      --purple:#8e6dd8;
+      --purple-soft:#f3efff;
 
-<style>
+      --orange:#f5a623;
+      --orange-soft:#fff7ea;
 
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC";
-background:#f4f8fc;
-color:#1f3042
-}
+      --green:#2ea97d;
+      --green-soft:#eefaf5;
 
-.top{
-background:#fff;
-padding:16px;
-border-bottom:1px solid #d8e5f2;
-display:flex;
-justify-content:space-between;
-align-items:center
-}
+      --gold:#d9a441;
+      --gold-soft:#fff8eb;
 
-.logo{
-font-size:22px;
-font-weight:900
-}
+      --red:#d95c68;
+      --shadow:0 10px 24px rgba(58,100,160,.08);
+      --r:22px;
+      --navh:78px;
+      --maxw:1180px;
+    }
 
-.nav a{
-margin-left:12px;
-text-decoration:none;
-font-weight:700;
-color:#4a90e2
-}
+    *{box-sizing:border-box}
 
-.stats{
-display:grid;
-grid-template-columns:repeat(6,1fr);
-gap:12px;
-padding:16px
-}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(circle at top left, rgba(124,183,255,.18), transparent 26%),
+        linear-gradient(180deg,#f8fbff 0%,#eef5fc 100%);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      min-height:100vh;
+    }
 
-.stat{
-background:#fff;
-padding:14px;
-border-radius:14px;
-text-align:center;
-box-shadow:0 6px 18px rgba(0,0,0,.06)
-}
+    a{color:inherit;text-decoration:none}
 
-.stat-title{
-font-size:12px;
-color:#63788f
-}
+    .page{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:16px 16px calc(var(--navh) + 18px);
+    }
 
-.stat-num{
-font-size:22px;
-font-weight:900
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
 
-.list{
-padding:16px;
-display:grid;
-gap:12px
-}
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
 
-.card{
-background:#fff;
-border-radius:16px;
-padding:16px;
-box-shadow:0 6px 18px rgba(0,0,0,.06)
-}
+    .brand-kicker{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2px;
+      color:var(--blue);
+      text-transform:uppercase;
+    }
 
-.title{
-font-size:18px;
-font-weight:900
-}
+    .brand-title{
+      font-size:26px;
+      font-weight:900;
+      line-height:1.15;
+    }
 
-.tag{
-display:inline-block;
-padding:3px 10px;
-border-radius:999px;
-font-size:12px;
-margin-right:6px;
-margin-top:6px
-}
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-.t-blue{background:#eef6ff;color:#4a90e2}
-.t-purple{background:#f3efff;color:#7b57d0}
-.t-orange{background:#fff7ea;color:#c98211}
-.t-green{background:#eefaf5;color:#26815d}
-.t-teal{background:#eefaf2;color:#15803d}
+    .btn{
+      appearance:none;
+      border:1px solid #bfd4ee;
+      background:#fff;
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 16px;
+      min-height:44px;
+      font-size:14px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(74,144,226,.05);
+    }
 
-.meta{
-font-size:14px;
-margin-top:8px;
-white-space:pre-wrap;
-color:#5e7388
-}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-blue{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
 
-a{
-color:#4a90e2;
-text-decoration:underline
-}
+    .panel{
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:16px;
+    }
 
-.search{
-padding:16px
-}
+    .panel-head{
+      padding:15px 16px;
+      border-bottom:1px solid #e9f1f8;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
 
-.search input{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid #d8e5f2
-}
+    .panel-title{
+      font-size:20px;
+      font-weight:900;
+    }
 
-.empty{
-padding:20px;
-text-align:center;
-color:#6c8095
-}
+    .panel-sub{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-top:4px;
+    }
 
-@media(max-width:800px){
+    .panel-body{
+      padding:16px;
+    }
 
-.stats{
-grid-template-columns:1fr 1fr
-}
+    .theme-blue .panel-head{background:linear-gradient(180deg,#f5faff,#eef6ff)}
+    .theme-purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
 
-}
+    .toolbar{
+      display:grid;
+      gap:12px;
+    }
 
-</style>
+    .search{
+      width:100%;
+      border:1px solid #d9e5f2;
+      border-radius:14px;
+      background:#fff;
+      padding:12px 14px;
+      font-size:15px;
+      outline:none;
+      color:var(--text);
+    }
 
+    .type-tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .tab{
+      min-height:36px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid #d8e5f2;
+      background:#fff;
+      color:#39536d;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .tab.active{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .stat-card{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:12px;
+    }
+
+    .stat-k{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .stat-v{
+      font-size:24px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .event-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .event-card{
+      border:1px solid #dfeaf5;
+      border-radius:18px;
+      background:linear-gradient(180deg,#fff,#f9fbff);
+      padding:14px;
+      display:grid;
+      gap:10px;
+      cursor:pointer;
+    }
+
+    .event-card:hover{transform:translateY(-1px)}
+
+    .event-top{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .dot{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      margin-top:7px;
+      flex:0 0 auto;
+    }
+
+    .event-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.35;
+    }
+
+    .tag-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .tag{
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .t-blue{background:#eef6ff;color:#4a90e2}
+    .t-purple{background:#f3efff;color:#7b57d0}
+    .t-orange{background:#fff7ea;color:#c98211}
+    .t-green{background:#eefaf5;color:#26815d}
+    .t-gray{background:#f2f5f8;color:#6a7e93}
+    .t-gold{background:#fff8eb;color:#9d6a12}
+
+    .event-meta{
+      font-size:14px;
+      font-weight:700;
+      color:#5e7388;
+      line-height:1.85;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .empty{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:#fbfdff;
+      color:#6c8095;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+    }
+
+    .err{
+      border:1px solid #f0ccd2;
+      border-radius:16px;
+      background:#fff3f4;
+      color:#bb4252;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.8;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:1000;
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(10px);
+      border-top:1px solid #dfe8f2;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      box-shadow:0 -8px 20px rgba(58,100,160,.08);
+      height:var(--navh);
+    }
+
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-size:11px;
+      font-weight:900;
+      color:#6b8198;
+    }
+
+    .nav-item.active{color:var(--blue)}
+    .nav-ico{font-size:18px;line-height:1}
+
+    @media (max-width:900px){
+      .stats-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width:760px){
+      .page{
+        padding:12px 12px calc(var(--navh) + 18px);
+      }
+
+      .brand-title{
+        font-size:23px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="top">
-
-<div class="logo">
-Events 活動
-</div>
-
-<div class="nav">
-
-<a href="./index.html">Home</a>
-<a href="./calendar.html">Calendar</a>
-<a href="./sites.html">Sites</a>
-<a href="./members.html">Members</a>
-
-</div>
-
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<div class="stat-title">全部</div>
-<div class="stat-num" id="countAll">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">活動</div>
-<div class="stat-num" id="countEvent">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">會議</div>
-<div class="stat-num" id="countMeeting">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">現勘</div>
-<div class="stat-num" id="countSurvey">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">案場</div>
-<div class="stat-num" id="countSite">0</div>
-</div>
-
-<div class="stat">
-<div class="stat-title">維運</div>
-<div class="stat-num" id="countOM">0</div>
-</div>
-
-</div>
-
-<div class="search">
-<input id="searchBox" placeholder="搜尋活動 / 地點 / 說明">
-</div>
-
-<div class="list" id="eventList"></div>
-
-
-<script>
-
-const API_URL="https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec"
-
-function $(id){return document.getElementById(id)}
-
-function t(v){return String(v||'').trim()}
-
-function parseDate(v){
-const d=new Date(v)
-return isNaN(d.getTime())?null:d
-}
-
-function fmt(v){
-const d=parseDate(v)
-if(!d)return v
-return d.toLocaleString("zh-TW",{hour12:false})
-}
-
-function linkify(text){
-return text.replace(/https?:\/\/[^\s]+/g,function(url){
-return '<a href="'+url+'" target="_blank">'+url+'</a>'
-})
-}
-
-function typeClass(type){
-
-if(type==="會議")return"t-purple"
-if(type==="現勘")return"t-orange"
-if(type==="案場")return"t-green"
-if(type==="維運")return"t-teal"
-
-return"t-blue"
-
-}
-
-let allEvents=[]
-
-async function load(){
-
-const res=await fetch(API_URL+"?action=list_events")
-const json=await res.json()
-
-if(!json.ok)return
-
-allEvents=json.events||[]
-
-renderStats(allEvents)
-renderList(allEvents)
-
-}
-
-function renderStats(events){
-
-$('countAll').textContent=events.length
-
-$('countEvent').textContent=
-events.filter(e=>t(e.extendedProps?.eventType)==="活動").length
-
-$('countMeeting').textContent=
-events.filter(e=>t(e.extendedProps?.eventType)==="會議").length
-
-$('countSurvey').textContent=
-events.filter(e=>t(e.extendedProps?.eventType)==="現勘").length
-
-$('countSite').textContent=
-events.filter(e=>t(e.extendedProps?.eventType)==="案場").length
-
-$('countOM').textContent=
-events.filter(e=>t(e.extendedProps?.eventType)==="維運").length
-
-}
-
-function renderList(events){
-
-const keyword=t($('searchBox').value).toLowerCase()
-
-const rows=events.filter(e=>{
-
-if(!keyword)return true
-
-const text=[
-t(e.title),
-t(e.extendedProps?.location),
-t(e.extendedProps?.description),
-t(e.extendedProps?.region),
-t(e.extendedProps?.eventType)
-].join(" ").toLowerCase()
-
-return text.includes(keyword)
-
-})
-
-if(!rows.length){
-$('eventList').innerHTML='<div class="empty">No Event</div>'
-return
-}
-
-$('eventList').innerHTML=rows.map(e=>{
-
-const type=t(e.extendedProps?.eventType)||"活動"
-const region=t(e.extendedProps?.region)||"未分類"
-
-const start=fmt(e.start)
-const end=e.end?fmt(e.end):""
-
-const desc=linkify(t(e.extendedProps?.description))
-
-return`
-
-<div class="card">
-
-<div class="title">
-
-<span class="tag ${typeClass(type)}">${type}</span>
-
-${e.title}
-
-</div>
-
-<div class="meta">
-
-${start}${end?" → "+end:""}
-
-${t(e.extendedProps?.location)}
-
-${region}
-
-${desc}
-
-</div>
-
-</div>
-
-`
-
-}).join("")
-
-}
-
-$('searchBox').addEventListener("input",()=>renderList(allEvents))
-
-load()
-
-</script>
-
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-kicker">Event Overview</div>
+        <div class="brand-title">活動 Event</div>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn" href="./index.html">Home</a>
+        <a class="btn btn-blue" href="./admin.html">Admin</a>
+      </div>
+    </div>
+
+    <section class="panel theme-blue">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">活動篩選 Filter</div>
+          <div class="panel-sub">Event / Meeting / Survey / Site</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="toolbar">
+          <input id="searchInput" class="search" type="text" placeholder="搜尋 Search">
+
+          <div class="type-tabs" id="typeTabs">
+            <div class="tab active" data-type="全部">全部 All</div>
+            <div class="tab" data-type="活動">活動 Event</div>
+            <div class="tab" data-type="會議">會議 Meeting</div>
+            <div class="tab" data-type="現勘">現勘 Survey</div>
+            <div class="tab" data-type="案場">案場 Site</div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-k">全部 All</div>
+              <div class="stat-v" id="countAll">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">活動 Event</div>
+              <div class="stat-v" id="countEvent">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">會議 Meeting</div>
+              <div class="stat-v" id="countMeeting">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">現勘 Survey</div>
+              <div class="stat-v" id="countSurvey">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">案場 Site</div>
+              <div class="stat-v" id="countSite">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">本月 Monthly</div>
+              <div class="stat-v" id="countMonth">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">近期 Upcoming</div>
+              <div class="stat-v" id="countUpcoming">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-k">顯示 Showing</div>
+              <div class="stat-v" id="countShowing">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel theme-purple">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">活動清單 Cards</div>
+          <div class="panel-sub">Tap to Calendar</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="event-list" id="eventList">
+          <div class="empty">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <div id="errorBox"></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="./index.html">
+      <div class="nav-ico">📢</div>
+      <div>公告</div>
+    </a>
+    <a class="nav-item active" href="./events.html">
+      <div class="nav-ico">📋</div>
+      <div>活動</div>
+    </a>
+    <a class="nav-item" href="./calendar.html">
+      <div class="nav-ico">🗓️</div>
+      <div>月曆</div>
+    </a>
+    <a class="nav-item" href="./sites.html">
+      <div class="nav-ico">📍</div>
+      <div>案場</div>
+    </a>
+    <a class="nav-item" href="./members.html">
+      <div class="nav-ico">👥</div>
+      <div>人員</div>
+    </a>
+  </nav>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec';
+
+    let allEvents = [];
+    let activeType = '全部';
+
+    function $(id){ return document.getElementById(id); }
+
+    function safe(v){
+      return String(v == null ? '' : v).replace(/[&<>"']/g, s => (
+        {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]
+      ));
+    }
+
+    function t(v,d=''){
+      const s = String(v == null ? '' : v).trim();
+      return s || d;
+    }
+
+    function jsonp(url, timeoutMs=12000){
+      return new Promise((resolve,reject)=>{
+        const cb = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+        let done = false, timer = null, script = null;
+
+        function clean(){
+          if(timer) clearTimeout(timer);
+          if(script && script.parentNode) script.parentNode.removeChild(script);
+          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+        }
+
+        window[cb] = function(data){
+          if(done) return;
+          done = true;
+          clean();
+          resolve(data);
+        };
+
+        script = document.createElement('script');
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+        script.async = true;
+
+        script.onerror = function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Error'));
+        };
+
+        timer = setTimeout(function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Timeout'));
+        }, timeoutMs);
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function parseDate(v){
+      if(!v) return null;
+      const d = new Date(v);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function fmt(v, allDay){
+      const d = parseDate(v);
+      if(!d) return t(v,'—');
+      if(allDay){
+        return d.toLocaleDateString('zh-TW',{
+          year:'numeric',
+          month:'2-digit',
+          day:'2-digit',
+          weekday:'short'
+        });
+      }
+      return d.toLocaleString('zh-TW',{
+        year:'numeric',
+        month:'2-digit',
+        day:'2-digit',
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:false
+      });
+    }
+
+    function typeColor(type){
+      if(type === '會議') return '#8e6dd8';
+      if(type === '現勘') return '#f5a623';
+      if(type === '案場') return '#2ea97d';
+      return '#4a90e2';
+    }
+
+    function normalizeEvents(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(e=>{
+        const p = e && e.extendedProps ? e.extendedProps : {};
+        return {
+          id:t(e.id),
+          title:t(e.title),
+          start:t(e.start),
+          end:t(e.end),
+          allDay:!!e.allDay,
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
+          extendedProps:{
+            location:t(p.location),
+            description:t(p.description),
+            updateAt:t(p.updateAt),
+            region:t(p.region,'未分類'),
+            eventType:t(p.eventType,'活動')
+          }
+        };
+      });
+    }
+
+    function setCounts(){
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth();
+      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      $('countAll').textContent = String(allEvents.length);
+      $('countEvent').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='活動').length);
+      $('countMeeting').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='會議').length);
+      $('countSurvey').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='現勘').length);
+      $('countSite').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='案場').length);
+      $('countMonth').textContent = String(allEvents.filter(e=>{
+        const d = parseDate(e.start);
+        return d && d.getFullYear()===y && d.getMonth()===m;
+      }).length);
+      $('countUpcoming').textContent = String(allEvents.filter(e=>{
+        const d = parseDate(e.start);
+        return d && d >= startOfToday;
+      }).length);
+    }
+
+    function filteredEvents(){
+      const keyword = t($('searchInput').value).toLowerCase();
+
+      return allEvents.filter(e=>{
+        const type = t(e.extendedProps?.eventType,'活動');
+        const okType = activeType === '全部' || type === activeType;
+
+        const text = [
+          t(e.title),
+          t(e.extendedProps?.location),
+          t(e.extendedProps?.description),
+          t(e.extendedProps?.region),
+          type
+        ].join(' ').toLowerCase();
+
+        const okKeyword = !keyword || text.includes(keyword);
+        return okType && okKeyword;
+      });
+    }
+
+    function renderList(){
+      const rows = filteredEvents();
+      $('countShowing').textContent = String(rows.length);
+
+      $('eventList').innerHTML = rows.length ? rows.map(e=>{
+        const type = t(e.extendedProps?.eventType,'活動');
+        const region = t(e.extendedProps?.region,'未分類');
+        const location = t(e.extendedProps?.location);
+        const desc = t(e.extendedProps?.description);
+        const color = t(e.color, typeColor(type));
+        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
+
+        return `
+          <a class="event-card" href="./calendar.html?focus=${encodeURIComponent(t(e.id))}">
+            <div class="event-top">
+              <div class="dot" style="background:${safe(color)}"></div>
+              <div style="min-width:0;flex:1">
+                <div class="event-title">${safe(t(e.title))}</div>
+                <div class="tag-row">
+                  <span class="tag ${typeClass}">${safe(type)}</span>
+                  <span class="tag t-gray">${safe(region)}</span>
+                  <span class="tag t-gold">${e.allDay ? 'All Day' : 'Timed'}</span>
+                </div>
+                <div class="event-meta">${safe(fmt(e.start,e.allDay))}${e.end ? ' → ' + safe(fmt(e.end,e.allDay)) : ''}
+<br>${safe(location)}
+<br>${safe(desc)}</div>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('') : '<div class="empty">No Data</div>';
+    }
+
+    function bindTabs(){
+      document.querySelectorAll('.tab').forEach(tab=>{
+        tab.addEventListener('click',()=>{
+          activeType = tab.getAttribute('data-type') || '全部';
+          document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+          tab.classList.add('active');
+          renderList();
+        });
+      });
+    }
+
+    async function boot(){
+      try{
+        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
+          throw new Error('API_URL Error');
+        }
+
+        const data = await jsonp(API_URL + '?action=list_events');
+        if(!data || !data.ok) throw new Error('Event API Error');
+
+        allEvents = normalizeEvents(data.events || []);
+        allEvents.sort((a,b)=>{
+          const ta = parseDate(a.start) ? parseDate(a.start).getTime() : 0;
+          const tb = parseDate(b.start) ? parseDate(b.start).getTime() : 0;
+          return ta - tb;
+        });
+
+        setCounts();
+        bindTabs();
+        $('searchInput').addEventListener('input', renderList);
+        renderList();
+      }catch(err){
+        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
+        $('eventList').innerHTML = '<div class="err">Event Error</div>';
+      }
+    }
+
+    boot();
+  </script>
 </body>
 </html>
