@@ -639,7 +639,7 @@
     function initCalendar(events){
       calendar = new FullCalendar.Calendar($('calendar'),{
         locale:'zh-tw',
-        initialView: window.innerWidth < 768 ? 'listMonth' : 'dayGridMonth',
+        initialView: 'dayGridMonth',
         height:'auto',
         headerToolbar:{
           left:'prev,next today',
@@ -676,15 +676,32 @@
 
       calendar.render();
 
-      const focusId = queryFocus();
-      if(focusId){
-        const target = calendar.getEventById(focusId);
-        if(target){
-          if(target.start) calendar.gotoDate(target.start);
-          renderDetail(target);
-          return;
-        }
-      }
+const focusId = queryFocus();
+if (focusId) {
+  const target = calendar.getEventById(focusId);
+  if (target) {
+    if (target.start) calendar.gotoDate(target.start);
+    renderDetail(target);
+    return;
+  }
+}
+
+const all = calendar.getEvents();
+if (all.length) {
+  const first = all
+    .filter(e => e.start)
+    .sort((a, b) => new Date(a.start) - new Date(b.start))[0];
+
+  if (first && first.start) {
+    calendar.gotoDate(first.start);
+    renderDetail(first);
+    return;
+  }
+}
+
+$('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
+
+$('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
 
       const first = calendar.getEvents()[0];
       if(first) renderDetail(first);
