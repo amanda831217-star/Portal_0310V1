@@ -287,6 +287,7 @@
     .t-green{background:#eefaf5;color:#26815d}
     .t-gray{background:#f2f5f8;color:#6a7e93}
     .t-gold{background:#fff8eb;color:#9d6a12}
+    .t-teal{background:#eefaf2;color:#15803d}
 
     .event-meta{
       font-size:14px;
@@ -418,6 +419,9 @@
             <div class="stat-card">
               <div class="stat-k">案場 Site</div>
               <div class="stat-v" id="countSite">0</div>
+               <div class="stat-card">
+              <div class="stat-k">維運 O&amp;M</div>
+              <div class="stat-v" id="countOM">0</div>
             </div>
             <div class="stat-card">
               <div class="stat-k">本月 Monthly</div>
@@ -603,6 +607,7 @@
       $('countMeeting').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='會議').length);
       $('countSurvey').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='現勘').length);
       $('countSite').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='案場').length);
+      $('countOM').textContent = String(allEvents.filter(e=>t(e.extendedProps?.eventType)==='維運').length);
       $('countMonth').textContent = String(allEvents.filter(e=>{
         const d = parseDate(e.start);
         return d && d.getFullYear()===y && d.getMonth()===m;
@@ -643,7 +648,7 @@
         const location = t(e.extendedProps?.location);
         const desc = t(e.extendedProps?.description);
         const color = t(e.color, typeColor(type));
-        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
+        const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue': (type === '維運' ? 't-green' : 't-blue')));
 
         return `
           <a class="event-card" href="./calendar.html?focus=${encodeURIComponent(t(e.id))}">
