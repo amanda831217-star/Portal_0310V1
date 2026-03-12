@@ -1,319 +1,715 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar 月曆</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/locales-all.global.min.js"></script>
 
-<title>Calendar 月曆</title>
+  <style>
+    :root{
+      --bg:#f4f8fc;
+      --panel:#ffffff;
+      --line:#d8e5f2;
+      --text:#1f3042;
+      --muted:#63788f;
 
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+      --blue:#4a90e2;
+      --blue-soft:#eef6ff;
 
-<style>
+      --purple:#8e6dd8;
+      --purple-soft:#f3efff;
 
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC";
-background:#f4f8fc;
-color:#1f3042
-}
+      --orange:#f5a623;
+      --orange-soft:#fff7ea;
 
-.top{
-background:#fff;
-padding:16px;
-border-bottom:1px solid #d8e5f2;
-display:flex;
-justify-content:space-between;
-align-items:center
-}
+      --green:#2ea97d;
+      --green-soft:#eefaf5;
 
-.logo{
-font-size:22px;
-font-weight:900
-}
+      --gold:#d9a441;
+      --gold-soft:#fff8eb;
 
-.nav a{
-margin-left:12px;
-text-decoration:none;
-font-weight:700;
-color:#4a90e2
-}
+      --shadow:0 10px 24px rgba(58,100,160,.08);
+      --r:22px;
+      --navh:78px;
+      --maxw:1180px;
+    }
 
-.wrap{
-display:grid;
-grid-template-columns:1fr 340px;
-gap:16px;
-padding:16px
-}
+    *{box-sizing:border-box}
 
-#calendar{
-background:#fff;
-border-radius:16px;
-padding:10px;
-box-shadow:0 6px 18px rgba(0,0,0,.06)
-}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(circle at top left, rgba(124,183,255,.18), transparent 26%),
+        linear-gradient(180deg,#f8fbff 0%,#eef5fc 100%);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      min-height:100vh;
+    }
 
-.detail{
-background:#fff;
-border-radius:16px;
-padding:16px;
-box-shadow:0 6px 18px rgba(0,0,0,.06)
-}
+    a{color:inherit;text-decoration:none}
 
-.detail-title{
-font-size:20px;
-font-weight:900;
-margin-bottom:8px
-}
+    .page{
+      max-width:var(--maxw);
+      margin:0 auto;
+      padding:16px 16px calc(var(--navh) + 18px);
+    }
 
-.tag{
-display:inline-block;
-padding:3px 10px;
-border-radius:999px;
-font-size:12px;
-margin-right:6px
-}
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
 
-.t-blue{background:#eef6ff;color:#4a90e2}
-.t-purple{background:#f3efff;color:#7b57d0}
-.t-orange{background:#fff7ea;color:#c98211}
-.t-green{background:#eefaf5;color:#26815d}
-.t-teal{background:#eefaf2;color:#15803d}
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
 
-.meta{
-margin-top:10px;
-font-size:14px;
-white-space:pre-wrap;
-color:#5e7388
-}
+    .brand-kicker{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2px;
+      color:var(--purple);
+      text-transform:uppercase;
+    }
 
-a{
-color:#4a90e2;
-text-decoration:underline
-}
+    .brand-title{
+      font-size:26px;
+      font-weight:900;
+      line-height:1.15;
+    }
 
-.detail-empty{
-color:#6c8095;
-padding:20px;
-text-align:center
-}
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
-@media(max-width:900px){
+    .btn{
+      appearance:none;
+      border:1px solid #bfd4ee;
+      background:#fff;
+      color:var(--text);
+      border-radius:14px;
+      padding:11px 16px;
+      min-height:44px;
+      font-size:14px;
+      font-weight:900;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      box-shadow:0 4px 10px rgba(74,144,226,.05);
+    }
 
-.wrap{
-grid-template-columns:1fr
-}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-blue{
+      background:linear-gradient(180deg,#7bbcff,#4a90e2);
+      color:#fff;
+      border-color:#5ca2ef;
+    }
 
-}
+    .layout{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
+    }
 
-</style>
+    .panel{
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
 
+    .panel-head{
+      padding:15px 16px;
+      border-bottom:1px solid #e9f1f8;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .panel-title{
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .panel-sub{
+      font-size:12px;
+      font-weight:800;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .panel-body{
+      padding:16px;
+    }
+
+    .theme-purple .panel-head{background:linear-gradient(180deg,#faf8ff,#f3efff)}
+    .theme-orange .panel-head{background:linear-gradient(180deg,#fffaf2,#fff3e4)}
+
+    .status-box{
+      padding:0 16px 14px;
+      font-size:13px;
+      font-weight:800;
+      color:#58728f;
+      min-height:20px;
+    }
+
+    .fc-wrap{
+      padding:8px 16px 16px;
+    }
+
+    #calendar{
+      min-height:720px;
+    }
+
+    .fc{
+      --fc-border-color:#e3edf8;
+      --fc-page-bg-color:transparent;
+      --fc-neutral-bg-color:#f8fbff;
+      --fc-list-event-hover-bg-color:#eef6ff;
+      --fc-today-bg-color:#edf6ff;
+      --fc-event-border-color:transparent;
+      --fc-button-bg-color:#ffffff;
+      --fc-button-border-color:#d6e5f5;
+      --fc-button-hover-bg-color:#f5faff;
+      --fc-button-hover-border-color:#bcd4ee;
+      --fc-button-active-bg-color:#edf6ff;
+      --fc-button-active-border-color:#9ec3eb;
+      --fc-event-bg-color:#4a90e2;
+      --fc-event-text-color:#ffffff;
+    }
+
+    .fc .fc-toolbar-title{
+      font-size:26px;
+      font-weight:900;
+      color:#223446;
+    }
+
+    .fc .fc-button{
+      color:#294764;
+      font-weight:900;
+      box-shadow:none;
+      border-radius:12px;
+      padding:8px 12px;
+    }
+
+    .fc .fc-col-header-cell-cushion{
+      padding:12px 4px;
+      font-size:13px;
+      color:#6282a3;
+      font-weight:900;
+    }
+
+    .fc .fc-daygrid-day-number{
+      padding:10px;
+      color:#27415c;
+      font-size:15px;
+      font-weight:900;
+    }
+
+    .fc .fc-daygrid-event{
+      border-radius:10px;
+      padding:3px 6px;
+      margin-top:4px;
+      box-shadow:0 6px 12px rgba(74,144,226,.14);
+      cursor:pointer;
+    }
+
+    .fc .fc-event-title{
+      white-space:normal;
+      font-weight:900;
+      line-height:1.35;
+      font-size:12px;
+    }
+
+    .fc .fc-daygrid-more-link{
+      font-weight:900;
+      color:#4a90e2;
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th{
+      border-color:#e3edf8;
+    }
+
+    .detail-empty{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+      line-height:1.8;
+    }
+
+    .detail-title{
+      font-size:26px;
+      font-weight:900;
+      line-height:1.25;
+      margin-bottom:12px;
+    }
+
+    .tag-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    .tag{
+      min-height:28px;
+      padding:0 10px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .t-blue{background:#eef6ff;color:#4a90e2}
+    .t-purple{background:#f3efff;color:#7b57d0}
+    .t-orange{background:#fff7ea;color:#c98211}
+    .t-green{background:#eefaf5;color:#26815d}
+    .t-gray{background:#f2f5f8;color:#6a7e93}
+    .t-gold{background:#fff8eb;color:#9d6a12}
+
+    .detail-grid{
+      display:grid;
+      gap:10px;
+    }
+
+    .detail-item{
+      border:1px solid #dfeaf5;
+      border-radius:16px;
+      background:#fbfdff;
+      padding:12px 14px;
+    }
+
+    .detail-label{
+      font-size:12px;
+      font-weight:900;
+      color:#6488b0;
+      letter-spacing:1px;
+      margin-bottom:6px;
+    }
+
+    .detail-value{
+      font-size:14px;
+      font-weight:700;
+      line-height:1.9;
+      color:#24374a;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .err{
+      border:1px solid #f0ccd2;
+      border-radius:16px;
+      background:#fff3f4;
+      color:#bb4252;
+      padding:14px;
+      font-size:14px;
+      font-weight:800;
+      line-height:1.8;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:1000;
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(10px);
+      border-top:1px solid #dfe8f2;
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      box-shadow:0 -8px 20px rgba(58,100,160,.08);
+      height:var(--navh);
+    }
+
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      font-size:11px;
+      font-weight:900;
+      color:#6b8198;
+    }
+
+    .nav-item.active{color:var(--purple)}
+    .nav-ico{font-size:18px;line-height:1}
+
+    @media (max-width:980px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width:760px){
+      .page{
+        padding:12px 12px calc(var(--navh) + 18px);
+      }
+
+      .brand-title{
+        font-size:23px;
+      }
+
+      .fc .fc-toolbar{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+
+      .fc .fc-toolbar-title{
+        font-size:22px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="top">
-
-<div class="logo">Calendar 月曆</div>
-
-<div class="nav">
-
-<a href="./index.html">Home</a>
-<a href="./events.html">Events</a>
-<a href="./sites.html">Sites</a>
-<a href="./members.html">Members</a>
-
-</div>
-
-</div>
-
-<div class="wrap">
-
-<div id="calendar"></div>
-
-<div class="detail" id="detailBox">
-<div class="detail-empty">Select Event</div>
-</div>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-
-<script>
-
-const API_URL="https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec"
-
-function $(id){return document.getElementById(id)}
-
-function t(v){return String(v||'').trim()}
-
-function parseDate(v){
-const d=new Date(v)
-return isNaN(d.getTime())?null:d
-}
-
-function fmt(v){
-const d=parseDate(v)
-if(!d)return v
-return d.toLocaleString("zh-TW",{hour12:false})
-}
-
-function linkify(text){
-return text.replace(/https?:\/\/[^\s]+/g,function(url){
-return '<a href="'+url+'" target="_blank">'+url+'</a>'
-})
-}
-
-function typeClass(type){
-
-if(type==="會議")return"t-purple"
-if(type==="現勘")return"t-orange"
-if(type==="案場")return"t-green"
-if(type==="維運")return"t-teal"
-
-return"t-blue"
-
-}
-
-function queryFocus(){
-const url=new URL(location.href)
-return url.searchParams.get("focus")
-}
-
-function renderDetail(e){
-
-const type=t(e.extendedProps?.eventType)||"活動"
-const region=t(e.extendedProps?.region)||"未分類"
-
-const start=fmt(e.start)
-const end=e.end?fmt(e.end):""
-
-const desc=linkify(t(e.extendedProps?.description))
-
-$('detailBox').innerHTML=`
-
-<div class="detail-title">${e.title}</div>
-
-<div>
-<span class="tag ${typeClass(type)}">${type}</span>
-<span class="tag t-blue">${region}</span>
-</div>
-
-<div class="meta">
-
-${start}${end?" → "+end:""}
-
-${t(e.extendedProps?.location)}
-
-${desc}
-
-</div>
-
-`
-
-}
-
-async function load(){
-
-const res=await fetch(API_URL+"?action=list_events")
-const json=await res.json()
-
-if(!json.ok)return
-
-initCalendar(json.events||[])
-
-}
-
-let calendar
-
-function initCalendar(events){
-
-calendar=new FullCalendar.Calendar($('calendar'),{
-
-locale:'zh-tw',
-
-initialView:'dayGridMonth',
-
-height:'auto',
-
-headerToolbar:{
-left:'prev,next today',
-center:'title',
-right:'dayGridMonth,timeGridWeek,listMonth'
-},
-
-buttonText:{
-today:'今天',
-month:'月',
-week:'週',
-list:'列表'
-},
-
-dayMaxEvents:3,
-
-navLinks:true,
-
-events:events,
-
-eventClick:function(info){
-info.jsEvent.preventDefault()
-renderDetail(info.event)
-},
-
-dateClick:function(info){
-
-const found=calendar.getEvents().filter(e=>{
-const d=parseDate(e.start)
-return d &&
-d.getFullYear()==info.date.getFullYear() &&
-d.getMonth()==info.date.getMonth() &&
-d.getDate()==info.date.getDate()
-})
-
-if(found.length)renderDetail(found[0])
-else $('detailBox').innerHTML='<div class="detail-empty">No Event</div>'
-
-}
-
-})
-
-calendar.render()
-
-const focusId=queryFocus()
-
-if(focusId){
-
-const target=calendar.getEventById(focusId)
-
-if(target){
-if(target.start)calendar.gotoDate(target.start)
-renderDetail(target)
-return
-}
-
-}
-
-const all=calendar.getEvents()
-
-if(all.length){
-
-const first=all
-.filter(e=>e.start)
-.sort((a,b)=>new Date(a.start)-new Date(b.start))[0]
-
-if(first && first.start){
-calendar.gotoDate(first.start)
-renderDetail(first)
-}
-
-}
-
-}
-
-load()
-
-</script>
-
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-kicker">Calendar View</div>
+        <div class="brand-title">月曆 Calendar</div>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn" href="./index.html">Home</a>
+        <a class="btn btn-blue" href="./admin.html">Admin</a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="panel theme-purple">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">月曆視圖 Month View</div>
+            <div class="panel-sub">Event / Meeting / Survey / Site</div>
+          </div>
+        </div>
+
+        <div class="status-box" id="statusBox">Loading...</div>
+
+        <div class="fc-wrap">
+          <div id="calendar"></div>
+        </div>
+      </section>
+
+      <section class="panel theme-orange">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">活動內容 Detail</div>
+            <div class="panel-sub">Tap Event</div>
+          </div>
+        </div>
+
+        <div class="panel-body" id="detailBox">
+          <div class="detail-empty">Select Event</div>
+        </div>
+      </section>
+    </div>
+
+    <div id="errorBox" style="margin-top:16px;"></div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="./index.html">
+      <div class="nav-ico">📢</div>
+      <div>公告</div>
+    </a>
+    <a class="nav-item" href="./events.html">
+      <div class="nav-ico">📋</div>
+      <div>活動</div>
+    </a>
+    <a class="nav-item active" href="./calendar.html">
+      <div class="nav-ico">🗓️</div>
+      <div>月曆</div>
+    </a>
+    <a class="nav-item" href="./sites.html">
+      <div class="nav-ico">📍</div>
+      <div>案場</div>
+    </a>
+    <a class="nav-item" href="./members.html">
+      <div class="nav-ico">👥</div>
+      <div>人員</div>
+    </a>
+  </nav>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxGDD3cvwe_tp3kA3a_EBGcia_Arf0DDEgGn7rsDVGHB8hBGiLPkm4U_-0PXOSUW9yV/exec';
+
+    let calendar = null;
+    let allEvents = [];
+
+    function $(id){ return document.getElementById(id); }
+
+    function safe(v){
+      return String(v == null ? '' : v).replace(/[&<>"']/g, s => (
+        {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]
+      ));
+    }
+
+    function t(v,d=''){
+      const s = String(v == null ? '' : v).trim();
+      return s || d;
+    }
+
+    function jsonp(url, timeoutMs=12000){
+      return new Promise((resolve,reject)=>{
+        const cb = 'jsonp_cb_' + Date.now() + '_' + Math.floor(Math.random()*100000);
+        let done = false, timer = null, script = null;
+
+        function clean(){
+          if(timer) clearTimeout(timer);
+          if(script && script.parentNode) script.parentNode.removeChild(script);
+          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+        }
+
+        window[cb] = function(data){
+          if(done) return;
+          done = true;
+          clean();
+          resolve(data);
+        };
+
+        script = document.createElement('script');
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+        script.async = true;
+
+        script.onerror = function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Error'));
+        };
+
+        timer = setTimeout(function(){
+          if(done) return;
+          done = true;
+          clean();
+          reject(new Error('JSONP Timeout'));
+        }, timeoutMs);
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function parseDate(v){
+      if(!v) return null;
+      const d = new Date(v);
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function fmt(v, allDay){
+      const d = parseDate(v);
+      if(!d) return t(v,'—');
+      if(allDay){
+        return d.toLocaleDateString('zh-TW',{
+          year:'numeric',
+          month:'2-digit',
+          day:'2-digit',
+          weekday:'short'
+        });
+      }
+      return d.toLocaleString('zh-TW',{
+        year:'numeric',
+        month:'2-digit',
+        day:'2-digit',
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:false
+      });
+    }
+
+    function typeColor(type){
+      if(type === '會議') return '#8e6dd8';
+      if(type === '現勘') return '#f5a623';
+      if(type === '案場') return '#2ea97d';
+      return '#4a90e2';
+    }
+
+    function normalizeEvents(raw){
+      if(!Array.isArray(raw)) return [];
+      return raw.map(e=>{
+        const p = e && e.extendedProps ? e.extendedProps : {};
+        return {
+          id:t(e.id),
+          title:t(e.title),
+          start:t(e.start),
+          end:t(e.end),
+          allDay:!!e.allDay,
+          color:t(e.color, typeColor(t(p.eventType,'活動'))),
+          extendedProps:{
+            location:t(p.location),
+            description:t(p.description),
+            updateAt:t(p.updateAt),
+            region:t(p.region,'未分類'),
+            eventType:t(p.eventType,'活動')
+          }
+        };
+      });
+    }
+
+    function linkify(text){
+      const raw = safe(text || '');
+      return raw.replace(
+        /(https?:\/\/[^\s<]+)/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#2f6fd6;text-decoration:underline;word-break:break-all">$1<\/a>'
+      );
+    }
+
+    function renderDetail(eventObj){
+      if(!eventObj){
+        $('detailBox').innerHTML = '<div class="detail-empty">Select Event</div>';
+        return;
+      }
+
+      const type = t(eventObj.extendedProps?.eventType,'活動');
+      const region = t(eventObj.extendedProps?.region,'未分類');
+      const location = t(eventObj.extendedProps?.location,'—');
+      const desc = t(eventObj.extendedProps?.description,'—');
+      const updateAt = t(eventObj.extendedProps?.updateAt,'—');
+      const typeClass = type === '會議' ? 't-purple' : (type === '現勘' ? 't-orange' : (type === '案場' ? 't-green' : 't-blue'));
+
+      $('detailBox').innerHTML = `
+        <div class="detail-title">${safe(t(eventObj.title))}</div>
+
+        <div class="tag-row">
+          <span class="tag ${typeClass}">${safe(type)}</span>
+          <span class="tag t-gray">${safe(region)}</span>
+          <span class="tag t-gold">${eventObj.allDay ? 'All Day' : 'Timed'}</span>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">開始 Start</div>
+            <div class="detail-value">${safe(fmt(eventObj.start,eventObj.allDay))}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">結束 End</div>
+            <div class="detail-value">${safe(eventObj.end ? fmt(eventObj.end,eventObj.allDay) : '—')}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">地點 Location</div>
+            <div class="detail-value">${safe(location)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">內容 Content</div>
+            <div class="detail-value">${linkify(desc)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-label">更新 Update</div>
+            <div class="detail-value">${safe(updateAt)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function queryFocus(){
+      const p = new URLSearchParams(window.location.search);
+      return t(p.get('focus'));
+    }
+
+    function initCalendar(events){
+      calendar = new FullCalendar.Calendar($('calendar'),{
+        locale:'zh-tw',
+        initialView: window.innerWidth < 768 ? 'listMonth' : 'dayGridMonth',
+        height:'auto',
+        headerToolbar:{
+          left:'prev,next today',
+          center:'title',
+          right:'dayGridMonth,timeGridWeek,listMonth'
+        },
+        buttonText:{
+          today:'今天',
+          month:'月',
+          week:'週',
+          list:'列表'
+        },
+        dayMaxEvents:3,
+        navLinks:true,
+        events:events,
+        eventClick:function(info){
+          info.jsEvent.preventDefault();
+          renderDetail(info.event);
+        },
+        dateClick:function(info){
+          if(!calendar) return;
+          const found = calendar.getEvents().filter(e=>{
+            const d = parseDate(e.start);
+            return d &&
+              d.getFullYear() === info.date.getFullYear() &&
+              d.getMonth() === info.date.getMonth() &&
+              d.getDate() === info.date.getDate();
+          });
+
+          if(found.length) renderDetail(found[0]);
+          else $('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
+        }
+      });
+
+      calendar.render();
+
+      const focusId = queryFocus();
+      if(focusId){
+        const target = calendar.getEventById(focusId);
+        if(target){
+          if(target.start) calendar.gotoDate(target.start);
+          renderDetail(target);
+          return;
+        }
+      }
+
+      const first = calendar.getEvents()[0];
+      if(first) renderDetail(first);
+      else $('detailBox').innerHTML = '<div class="detail-empty">No Event</div>';
+    }
+
+    async function boot(){
+      try{
+        if(!t(API_URL) || API_URL === 'YOUR_GAS_WEBAPP_URL'){
+          throw new Error('API_URL Error');
+        }
+
+        const data = await jsonp(API_URL + '?action=list_events');
+        if(!data || !data.ok) throw new Error('Event API Error');
+
+        allEvents = normalizeEvents(data.events || []);
+        $('statusBox').textContent = `Loaded ${allEvents.length}`;
+        initCalendar(allEvents);
+      }catch(err){
+        $('errorBox').innerHTML = `<div class="err">${safe(err.message || 'Init Error')}</div>`;
+        $('detailBox').innerHTML = '<div class="err">Detail Error</div>';
+      }
+    }
+
+    boot();
+  </script>
 </body>
 </html>
